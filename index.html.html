@@ -1,0 +1,2511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platform Asesmen Sumatif Digital — Lingkup Materi</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-tap-highlight-color: transparent;
+    }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    @keyframes pulse-urgent {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    .timer-urgent {
+      animation: pulse-urgent 1s infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- =====================================================================
+       STICKY TOP NAVBAR (ALWAYS VISIBLE, SHOWS LIVE TIMER DURING EXAM)
+  ====================================================================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+      <!-- Brand / Title -->
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-sm shrink-0">
+          <i class="fa-solid fa-graduation-cap text-lg"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-display font-bold text-slate-900 text-sm sm:text-base truncate" id="nav-subject-title">Asesmen Sumatif Digital</span>
+            <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100" id="nav-class-badge">SMP Kelas 9</span>
+          </div>
+          <p class="text-xs text-slate-500 truncate" id="nav-chapter-subtitle">Bab 3. Journey to The Fantasy Worlds</p>
+        </div>
+      </div>
+
+      <!-- Center / Right Controls: Live Timer + Teacher Dashboard Button -->
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <!-- Live Countdown Timer (Visible on both mobile & desktop during exam) -->
+        <div id="header-timer-box" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 font-mono font-bold text-sm sm:text-base transition-colors">
+          <i class="fa-regular fa-clock text-indigo-600" id="header-timer-icon"></i>
+          <span id="header-timer-display">60:00</span>
+        </div>
+
+        <!-- Cloud Sync Status Pill -->
+        <div id="sync-badge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200" title="Status Sinkronisasi Rekap">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span id="sync-badge-text">Siap</span>
+        </div>
+
+        <!-- Teacher Dashboard Button -->
+        <button id="btn-open-teacher-modal" type="button" class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 shadow-xs transition active:scale-95">
+          <i class="fa-solid fa-chalkboard-user text-indigo-600"></i>
+          <span>Dashboard Guru</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       MAIN APPLICATION CONTAINER
+  ====================================================================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+    <!-- VIEW 1: LANDING / ASSESSMENT INFO & STUDENT IDENTITY -->
+    <section id="view-landing" class="space-y-6">
+      <!-- Hero Banner -->
+      <div class="bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-700 rounded-2xl p-6 sm:p-8 text-white shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-xs text-xs font-semibold tracking-wide uppercase">
+            <i class="fa-solid fa-sparkles"></i>
+            <span id="hero-meta-tag">SMP • Kelas 9 / Fase D • Semester 1</span>
+          </div>
+          <h1 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold leading-tight" id="hero-chapter-title">
+            Bab 3. Journey to The Fantasy Worlds
+          </h1>
+          <p class="text-indigo-100 text-sm sm:text-base leading-relaxed" id="hero-subject-desc">
+            Asesmen Sumatif Lingkup Materi — Mata Pelajaran Bahasa Inggris. Mengukur pemahaman teks naratif fantasi, penggunaan <em>was/were</em>, <em>indirect speech</em>, serta penyusunan alur cerita kreatif.
+          </p>
+        </div>
+        <!-- Decorative Circles -->
+        <div class="hidden sm:block absolute -right-12 -bottom-12 w-64 h-64 rounded-full bg-white/10 blur-xl"></div>
+        <div class="hidden sm:block absolute right-24 -top-12 w-40 h-40 rounded-full bg-violet-400/20 blur-lg"></div>
+      </div>
+
+      <!-- Key Metrics Strip -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-list-check text-lg"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-slate-500">Jumlah Soal</p>
+            <p class="font-display font-bold text-slate-900 text-lg" id="info-total-questions">20 Soal</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-hourglass-half text-lg"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-slate-500">Alokasi Waktu</p>
+            <p class="font-display font-bold text-slate-900 text-lg" id="info-duration">60 Menit</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-bullseye text-lg"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-slate-500">Target KKTP</p>
+            <p class="font-display font-bold text-slate-900 text-lg" id="info-kktp">76</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-layer-group text-lg"></i>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-slate-500">Bentuk Soal</p>
+            <p class="font-display font-bold text-slate-900 text-xs sm:text-sm" id="info-question-types">10 PG • 5 PGK • 5 B/S</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-Column Content: Left = Curriculum & Instructions, Right = Student Form -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Left 7 Columns: Lingkup Materi, Tujuan Pembelajaran & Petunjuk -->
+        <div class="lg:col-span-7 space-y-6">
+          <!-- Lingkup Materi & Sub-Bab -->
+          <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
+              <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-bold">
+                <i class="fa-solid fa-book-open"></i>
+              </span>
+              <h2 class="font-display font-bold text-lg text-slate-900">Lingkup Materi & Sub-Bab</h2>
+            </div>
+            <ul id="list-subbab" class="space-y-2.5 text-sm text-slate-700">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+
+          <!-- Tujuan Pembelajaran (TP) -->
+          <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
+              <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-bold">
+                <i class="fa-solid fa-flag-checkered"></i>
+              </span>
+              <h2 class="font-display font-bold text-lg text-slate-900">Tujuan Pembelajaran (TP) yang Diukur</h2>
+            </div>
+            <div id="list-tp" class="space-y-2.5">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Petunjuk Pengerjaan -->
+          <div class="bg-amber-50/80 rounded-2xl p-5 sm:p-6 border border-amber-200/80 space-y-3">
+            <div class="flex items-center gap-2 text-amber-900 font-display font-bold text-base">
+              <i class="fa-solid fa-circle-info text-amber-600"></i>
+              <h3>Petunjuk Pengerjaan Asesmen</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-amber-950/90 list-disc pl-5">
+              <li>Isi identitas diri (<strong>Nama Lengkap, Kelas, dan Nomor Absen</strong>) dengan benar sebelum memulai.</li>
+              <li>Waktu pengerjaan adalah <strong id="instruction-duration">60 menit</strong> dan berjalan otomatis begitu tombol <em>Mulai Asesmen</em> ditekan.</li>
+              <li>Terdapat 3 tipe soal: <strong>Pilihan Ganda</strong> (1 jawaban benar), <strong>Pilihan Ganda Kompleks</strong> (pilih lebih dari 1 pernyataan benar), dan <strong>Benar / Salah</strong>.</li>
+              <li>Asesmen ini menerapkan <strong>sistem satu kali pengerjaan</strong>. Pastikan koneksi stabil dan periksa kembali seluruh jawaban sebelum menekan tombol <em>Selesai & Kumpulkan</em>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right 5 Columns: Student Identity Form Card -->
+        <div class="lg:col-span-5 lg:sticky lg:top-24">
+          <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-md space-y-5">
+            <div class="space-y-1">
+              <h2 class="font-display font-bold text-xl text-slate-900">Identitas Peserta Didik</h2>
+              <p class="text-xs sm:text-sm text-slate-500">Lengkapi data di bawah ini untuk membuka lembar asesmen.</p>
+            </div>
+
+            <!-- Alert Banner if Student Already Completed Assessment -->
+            <div id="retake-warning-box" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-sm space-y-2">
+              <div class="flex items-start gap-2.5">
+                <i class="fa-solid fa-lock text-rose-600 mt-0.5"></i>
+                <div>
+                  <p class="font-bold">Akses Pengerjaan Ulang Dibatasi</p>
+                  <p class="text-xs mt-1 leading-relaxed" id="retake-warning-msg">Anda tercatat telah menyelesaikan asesmen ini.</p>
+                </div>
+              </div>
+              <button type="button" id="btn-view-existing-result" class="w-full py-2 px-3 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition">
+                Lihat Hasil & Pembahasan Saya
+              </button>
+            </div>
+
+            <form id="student-start-form" class="space-y-4">
+              <div>
+                <label for="input-student-name" class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Lengkap Siswa <span class="text-rose-500">*</span></label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                    <i class="fa-solid fa-user"></i>
+                  </span>
+                  <input type="text" id="input-student-name" required placeholder="Contoh: Andini Putri Pratama"
+                    class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label for="input-student-class" class="block text-sm font-semibold text-slate-700 mb-1.5">Kelas <span class="text-rose-500">*</span></label>
+                  <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                      <i class="fa-solid fa-users"></i>
+                    </span>
+                    <input type="text" id="input-student-class" required placeholder="Contoh: 9A"
+                      class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-300 text-sm uppercase focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" />
+                  </div>
+                </div>
+
+                <div>
+                  <label for="input-student-absen" class="block text-sm font-semibold text-slate-700 mb-1.5">No. Absen <span class="text-rose-500">*</span></label>
+                  <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                      <i class="fa-solid fa-hashtag"></i>
+                    </span>
+                    <input type="number" id="input-student-absen" min="1" max="60" required placeholder="01"
+                      class="w-full pl-10 pr-3 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Optional Teacher Reset Token Input (Collapsed by default) -->
+              <div class="pt-1">
+                <button type="button" id="toggle-reset-token" class="text-xs font-medium text-indigo-600 hover:text-indigo-800 inline-flex items-center gap-1">
+                  <i class="fa-solid fa-key text-[11px]"></i>
+                  <span>Punya Token Reset dari Guru?</span>
+                </button>
+                <div id="reset-token-container" class="hidden mt-2">
+                  <input type="text" id="input-reset-token" placeholder="Masukkan token pembuka kunci (opsional)"
+                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs uppercase focus:ring-2 focus:ring-indigo-500 outline-none" />
+                </div>
+              </div>
+
+              <div id="form-error-msg" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"></div>
+
+              <button type="submit" id="btn-start-exam" class="w-full py-3.5 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-display font-bold text-base shadow-md shadow-indigo-200 transition flex items-center justify-center gap-2">
+                <span>Mulai Asesmen Sekarang</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </form>
+
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+              <span><i class="fa-solid fa-shield-halved text-emerald-500 mr-1"></i> Auto-Save Jawaban</span>
+              <span><i class="fa-solid fa-shuffle text-indigo-500 mr-1"></i> Soal & Opsi Diacak</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 2: ACTIVE INTERACTIVE EXAM INTERFACE
+    ==================================================================== -->
+    <section id="view-exam" class="hidden space-y-5">
+      <!-- Student Info Bar & Mobile Navigator Toggle -->
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 font-display font-bold flex items-center justify-center text-sm" id="exam-student-initials">
+            AP
+          </div>
+          <div>
+            <p class="font-bold text-sm text-slate-900" id="exam-student-name">Nama Siswa</p>
+            <p class="text-xs text-slate-500" id="exam-student-meta">Kelas 9A • No. Absen 01</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700" id="exam-progress-pill">
+            Terjawab: 0 / 20
+          </span>
+          <button type="button" id="btn-toggle-mobile-nav" class="lg:hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-200">
+            <i class="fa-solid fa-grid-2"></i>
+            <span>Daftar Soal</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Collapsible Question Navigator -->
+      <div id="mobile-nav-drawer" class="hidden lg:hidden bg-white rounded-2xl p-4 border border-slate-200 shadow-md space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="font-display font-bold text-sm text-slate-800">Navigasi Nomor Soal</span>
+          <button type="button" id="btn-close-mobile-nav" class="text-slate-400 hover:text-slate-600 text-sm">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div id="mobile-nav-grid" class="grid grid-cols-5 sm:grid-cols-10 gap-2"></div>
+        <div class="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 pt-2 border-t border-slate-100">
+          <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-sm bg-emerald-500 inline-block"></span> Dijawab</span>
+          <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-sm bg-amber-400 inline-block"></span> Ragu-ragu</span>
+          <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-sm bg-slate-100 border border-slate-300 inline-block"></span> Belum</span>
+        </div>
+      </div>
+
+      <!-- Main Exam Grid: Left = Question Card, Right = Desktop Navigator -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Question Display Area (8 cols) -->
+        <div class="lg:col-span-8 space-y-4">
+          <div class="bg-white rounded-2xl p-5 sm:p-7 border border-slate-200 shadow-xs space-y-5">
+            <!-- Top Question Metadata Badges -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-slate-100">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-3 py-1 rounded-lg bg-indigo-600 text-white font-display font-bold text-sm" id="q-number-badge">
+                  Soal 1 dari 20
+                </span>
+                <span class="px-2.5 py-1 rounded-lg bg-violet-50 text-violet-700 border border-violet-200 text-xs font-semibold" id="q-type-badge">
+                  Pilihan Ganda
+                </span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-medium" id="q-difficulty-badge">
+                  Sedang
+                </span>
+              </div>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg" id="q-tp-badge">
+                TP1
+              </span>
+            </div>
+
+            <!-- Reading Stimulus Box (if present) -->
+            <div id="q-stimulus-box" class="hidden rounded-xl bg-slate-50 border-l-4 border-indigo-500 p-4 sm:p-5 space-y-2">
+              <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-700">
+                <i class="fa-solid fa-book-open-reader"></i>
+                <span id="q-stimulus-title">Reading Passage / Stimulus</span>
+              </div>
+              <div id="q-stimulus-content" class="text-sm sm:text-[15px] text-slate-700 leading-relaxed space-y-2"></div>
+            </div>
+
+            <!-- Question Prompt -->
+            <div class="space-y-1.5">
+              <p id="q-prompt-text" class="text-base sm:text-lg font-semibold text-slate-900 leading-snug"></p>
+              <p id="q-instruction-hint" class="text-xs font-medium text-indigo-600"></p>
+            </div>
+
+            <!-- Options Container (Rendered dynamically for PG, PGK, BS) -->
+            <div id="q-options-container" class="space-y-3 pt-1"></div>
+
+            <!-- Bottom Navigation & Flag Controls -->
+            <div class="pt-5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+              <button type="button" id="btn-prev-q" class="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm transition disabled:opacity-40 disabled:pointer-events-none flex items-center gap-2">
+                <i class="fa-solid fa-chevron-left"></i>
+                <span>Sebelumnya</span>
+              </button>
+
+              <button type="button" id="btn-flag-q" class="px-4 py-2.5 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-800 font-semibold text-sm transition flex items-center gap-2">
+                <i class="fa-regular fa-flag" id="flag-icon"></i>
+                <span id="flag-text">Ragu-ragu</span>
+              </button>
+
+              <button type="button" id="btn-next-q" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition flex items-center gap-2">
+                <span>Selanjutnya</span>
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Sidebar Navigator (4 cols) -->
+        <aside class="hidden lg:block lg:col-span-4 lg:sticky lg:top-24 space-y-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 class="font-display font-bold text-base text-slate-900">Navigasi Soal</h3>
+              <span class="text-xs font-semibold text-slate-500" id="sidebar-answered-count">0/20 Selesai</span>
+            </div>
+
+            <div id="desktop-nav-grid" class="grid grid-cols-5 gap-2"></div>
+
+            <div class="space-y-1.5 pt-3 border-t border-slate-100 text-xs text-slate-600">
+              <div class="flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-md bg-emerald-500 inline-block"></span>
+                <span>Sudah Dijawab</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-md bg-amber-400 inline-block"></span>
+                <span>Ditandai Ragu-ragu</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-3.5 h-3.5 rounded-md bg-slate-100 border border-slate-300 inline-block"></span>
+                <span>Belum Dijawab</span>
+              </div>
+            </div>
+
+            <button type="button" id="btn-open-submit-modal" class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold text-sm shadow-sm shadow-emerald-200 transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Selesai & Kumpulkan</span>
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Mobile Sticky Bottom Submit Bar -->
+      <div class="lg:hidden sticky bottom-3 z-30">
+        <button type="button" id="btn-open-submit-modal-mobile" class="w-full py-3.5 px-5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-display font-bold text-sm shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Selesai & Kumpulkan Jawaban</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 3: STUDENT RESULT, COMPETENCY DIAGNOSTICS & FEEDBACK REPORT
+    ==================================================================== -->
+    <section id="view-result" class="hidden space-y-6">
+      <!-- Top Result Summary Card -->
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-2 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider" id="res-status-badge">
+              <i class="fa-solid fa-award"></i>
+              <span id="res-status-text">TUNTAS</span>
+            </div>
+            <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900" id="res-student-name">Nama Siswa</h2>
+            <p class="text-sm text-slate-500" id="res-student-meta">Kelas 9A • No. Absen 01 • Waktu Pengerjaan: 18 menit 42 detik</p>
+
+            <!-- Sync Status to Teacher Recap -->
+            <div class="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <span id="res-sync-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <i class="fa-solid fa-cloud-check"></i>
+                <span id="res-sync-text">Terkirim ke Rekap Guru</span>
+              </span>
+              <button type="button" id="btn-retry-sync" class="hidden inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-semibold bg-amber-100 text-amber-800 hover:bg-amber-200 transition">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Kirim Ulang</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Score Circle -->
+          <div class="flex items-center gap-6">
+            <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full border-8 flex flex-col items-center justify-center shadow-inner" id="res-score-circle">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Nilai Akhir</span>
+              <span class="font-display text-4xl sm:text-5xl font-extrabold" id="res-final-score">85</span>
+              <span class="text-xs font-semibold text-slate-500" id="res-kktp-compare">KKTP: 76</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Breakdown Stats Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-100">
+          <div class="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-100 text-center">
+            <p class="text-xs font-medium text-emerald-700">Jawaban Benar</p>
+            <p class="font-display font-extrabold text-2xl text-emerald-700 mt-0.5" id="res-correct-count">17</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-rose-50/70 border border-rose-100 text-center">
+            <p class="text-xs font-medium text-rose-700">Jawaban Salah</p>
+            <p class="font-display font-extrabold text-2xl text-rose-700 mt-0.5" id="res-wrong-count">3</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-100/80 border border-slate-200 text-center">
+            <p class="text-xs font-medium text-slate-600">Tidak Dijawab</p>
+            <p class="font-display font-extrabold text-2xl text-slate-700 mt-0.5" id="res-blank-count">0</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-indigo-50/70 border border-indigo-100 text-center">
+            <p class="text-xs font-medium text-indigo-700">Skor Persentase</p>
+            <p class="font-display font-extrabold text-2xl text-indigo-700 mt-0.5" id="res-percentage">85%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-Column Diagnostics: Competency Analysis + Pedagogical Follow-Up -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Competency Mastery Per TP (7 cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-chart-simple"></i>
+              </span>
+              <h3 class="font-display font-bold text-lg text-slate-900">Analisis Ketercapaian Kompetensi (TP)</h3>
+            </div>
+          </div>
+          <div id="res-tp-breakdown" class="space-y-4">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Pedagogical Recommendation: Remedial & Pengayaan (5 cols) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
+            <span class="w-8 h-8 rounded-lg bg-violet-100 text-violet-700 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-compass"></i>
+            </span>
+            <h3 class="font-display font-bold text-lg text-slate-900">Rekomendasi Tindak Lanjut</h3>
+          </div>
+          <div id="res-followup-content" class="space-y-3 text-sm text-slate-700 leading-relaxed">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Educational Feedback & Answer Key Review -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div>
+            <h3 class="font-display font-bold text-lg text-slate-900">Pembahasan & Umpan Balik Edukatif</h3>
+            <p class="text-xs text-slate-500">Pelajari analisis jawaban dan penjelasan konsep untuk setiap butir soal.</p>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl self-start">
+            <button type="button" data-filter="all" class="review-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-indigo-700 shadow-xs">Semua (20)</button>
+            <button type="button" data-filter="wrong" class="review-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900">Perlu Dipelajari</button>
+            <button type="button" data-filter="correct" class="review-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900">Benar</button>
+          </div>
+        </div>
+
+        <div id="res-questions-review" class="space-y-4">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 4: PIN-PROTECTED TEACHER DASHBOARD
+    ==================================================================== -->
+    <section id="view-teacher" class="hidden space-y-6">
+      <!-- Teacher Header Banner -->
+      <div class="bg-slate-900 text-white rounded-2xl p-6 sm:p-7 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Mode Pendidik Terverifikasi</span>
+          </div>
+          <h2 class="font-display text-2xl font-extrabold">Dashboard Rekapitulasi & Analisis Hasil Belajar</h2>
+          <p class="text-slate-400 text-xs sm:text-sm" id="teacher-meta-subtitle">Bahasa Inggris • SMP Kelas 9 / Fase D • Bab 3. Journey to The Fantasy Worlds</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button type="button" id="btn-export-csv" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs sm:text-sm shadow-sm transition flex items-center gap-2">
+            <i class="fa-solid fa-file-excel"></i>
+            <span>Unduh Rekap Excel (.CSV)</span>
+          </button>
+          <button type="button" id="btn-exit-teacher" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs sm:text-sm border border-slate-700 transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Kembali</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+          <p class="text-xs font-medium text-slate-500">Total Peserta</p>
+          <p class="font-display font-extrabold text-2xl text-slate-900 mt-1" id="kpi-total-students">0</p>
+          <p class="text-[11px] text-slate-400 mt-1">Siswa mengumpulkan</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+          <p class="text-xs font-medium text-slate-500">Rata-rata Nilai</p>
+          <p class="font-display font-extrabold text-2xl text-indigo-600 mt-1" id="kpi-avg-score">0.0</p>
+          <p class="text-[11px] text-slate-400 mt-1">Skala 0 – 100</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+          <p class="text-xs font-medium text-slate-500">Ketuntasan Klasikal</p>
+          <p class="font-display font-extrabold text-2xl text-emerald-600 mt-1" id="kpi-mastery-rate">0%</p>
+          <p class="text-[11px] text-slate-400 mt-1" id="kpi-kktp-label">KKTP ≥ 76</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+          <p class="text-xs font-medium text-slate-500">Nilai Tertinggi</p>
+          <p class="font-display font-extrabold text-2xl text-slate-900 mt-1" id="kpi-max-score">-</p>
+          <p class="text-[11px] text-emerald-600 truncate mt-1" id="kpi-max-student">-</p>
+        </div>
+
+        <div class="col-span-2 lg:col-span-1 bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+          <p class="text-xs font-medium text-slate-500">Nilai Terendah</p>
+          <p class="font-display font-extrabold text-2xl text-slate-900 mt-1" id="kpi-min-score">-</p>
+          <p class="text-[11px] text-rose-600 truncate mt-1" id="kpi-min-student">-</p>
+        </div>
+      </div>
+
+      <!-- Class-Wide Competency Analysis & Retake Unlock Utility -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Classical TP Mastery (7 cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="font-display font-bold text-base sm:text-lg text-slate-900">Analisis Kompetensi Klasikal (Per TP)</h3>
+              <p class="text-xs text-slate-500">Identifikasi tujuan pembelajaran yang memerlukan penguatan atau remedial klasikal.</p>
+            </div>
+          </div>
+          <div id="teacher-tp-chart" class="space-y-3.5">
+            <p class="text-sm text-slate-400 italic">Belum ada data pengerjaan siswa.</p>
+          </div>
+        </div>
+
+        <!-- Teacher Tools: Unlock Retake Token & Data Management (5 cols) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="border-b border-slate-100 pb-3">
+            <h3 class="font-display font-bold text-base sm:text-lg text-slate-900">Kontrol Akses & Utilitas Guru</h3>
+            <p class="text-xs text-slate-500">Kelola izin pengerjaan ulang siswa dan sinkronisasi data.</p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-100 space-y-2.5">
+            <p class="text-xs font-bold text-indigo-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-key text-indigo-600"></i>
+              <span>Token Izin Pengerjaan Ulang Siswa</span>
+            </p>
+            <p class="text-xs text-indigo-800/80 leading-relaxed">
+              Berikan token ini kepada siswa tertentu yang mengalami kendala teknis dan perlu mengulang asesmen:
+            </p>
+            <div class="flex items-center gap-2">
+              <code id="teacher-reset-token-display" class="flex-1 px-3 py-2 rounded-lg bg-white border border-indigo-200 font-mono font-bold text-sm text-indigo-700 text-center tracking-widest">
+                ULANG-9D
+              </code>
+              <button type="button" id="btn-copy-reset-token" class="px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition">
+                Salin
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-col sm:flex-row gap-2">
+            <button type="button" id="btn-refresh-teacher-data" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold transition flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-arrows-rotate"></i>
+              <span>Segarkan Data</span>
+            </button>
+            <button type="button" id="btn-clear-all-data" class="flex-1 py-2.5 px-3 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold transition flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-trash-can"></i>
+              <span>Reset Semua Rekap</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Recap Table -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="font-display font-bold text-lg text-slate-900">Rekapitulasi Hasil Peserta Didik</h3>
+            <p class="text-xs text-slate-500">Data otomatis terhimpun dari seluruh perangkat yang mengakses tautan asesmen ini.</p>
+          </div>
+          <div class="relative w-full sm:w-64">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-xs">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <input type="text" id="teacher-search-input" placeholder="Cari nama atau kelas..."
+              class="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 outline-none" />
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                <th class="py-3.5 px-4">No</th>
+                <th class="py-3.5 px-4">Nama Peserta Didik</th>
+                <th class="py-3.5 px-4">Kelas / Absen</th>
+                <th class="py-3.5 px-4">Waktu</th>
+                <th class="py-3.5 px-4 text-center">B / S / K</th>
+                <th class="py-3.5 px-4 text-center">Nilai</th>
+                <th class="py-3.5 px-4">Status</th>
+                <th class="py-3.5 px-4">Kompetensi Perlu Penguatan</th>
+              </tr>
+            </thead>
+            <tbody id="teacher-recap-tbody" class="divide-y divide-slate-100 text-sm">
+              <tr>
+                <td colspan="8" class="py-10 text-center text-slate-400 text-sm">Memuat data rekapitulasi...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       MODALS (CUSTOM UI — NO BROWSER ALERT/CONFIRM)
+  ====================================================================== -->
+
+  <!-- Modal 1: Submit Confirmation Modal -->
+  <div id="modal-submit-confirm" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-5 animate-fade-in">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+          <i class="fa-solid fa-paper-plane"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-lg text-slate-900">Kumpulkan Jawaban?</h3>
+          <p class="text-xs text-slate-500">Pastikan semua soal telah diperiksa dengan teliti.</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span class="text-slate-600">Soal Sudah Dijawab:</span>
+          <span class="font-bold text-emerald-600" id="modal-answered-count">0 soal</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-600">Soal Belum Dijawab:</span>
+          <span class="font-bold text-rose-600" id="modal-unanswered-count">20 soal</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-600">Ditandai Ragu-ragu:</span>
+          <span class="font-bold text-amber-600" id="modal-flagged-count">0 soal</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-500 leading-relaxed">
+        Setelah dikumpulkan, jawaban tidak dapat diubah dan nilai akan langsung tercatat pada rekapitulasi guru.
+      </p>
+
+      <div class="flex items-center gap-3 pt-1">
+        <button type="button" id="btn-cancel-submit" class="flex-1 py-2.5 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition">
+          Periksa Lagi
+        </button>
+        <button type="button" id="btn-confirm-submit" class="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-sm transition">
+          Ya, Kumpulkan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Teacher PIN Authentication Modal -->
+  <div id="modal-teacher-pin" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl space-y-5">
+      <div class="text-center space-y-2">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl mx-auto">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h3 class="font-display font-bold text-lg text-slate-900">Akses Dashboard Guru</h3>
+        <p class="text-xs text-slate-500">Masukkan PIN Pendidik untuk membuka rekapitulasi nilai dan analisis kelas.</p>
+      </div>
+
+      <form id="teacher-pin-form" class="space-y-4">
+        <div>
+          <input type="password" id="input-teacher-pin" inputmode="numeric" maxlength="8" required placeholder="••••"
+            class="w-full text-center tracking-[0.5em] font-mono font-bold text-2xl py-3 px-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none" />
+          <p id="pin-error-msg" class="hidden text-xs text-rose-600 font-medium text-center mt-2">PIN salah. Silakan coba lagi.</p>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <button type="button" id="btn-close-pin-modal" class="flex-1 py-2.5 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition">
+            Batal
+          </button>
+          <button type="submit" class="flex-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition">
+            Buka Dashboard
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Confirm Clear Data Modal -->
+  <div id="modal-clear-confirm" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl space-y-4">
+      <div class="flex items-center gap-3 text-rose-600">
+        <div class="w-11 h-11 rounded-xl bg-rose-100 flex items-center justify-center text-lg shrink-0">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3 class="font-display font-bold text-lg text-slate-900">Hapus Semua Rekap?</h3>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+        Tindakan ini akan menghapus seluruh data hasil asesmen siswa dari rekapitulasi dan membuka kembali kunci pengerjaan pada perangkat ini. Pastikan Anda sudah mengunduh file Excel (.CSV) terlebih dahulu.
+      </p>
+      <div class="flex items-center gap-2.5 pt-2">
+        <button type="button" id="btn-cancel-clear" class="flex-1 py-2.5 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition">
+          Batal
+        </button>
+        <button type="button" id="btn-confirm-clear" class="flex-1 py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm transition">
+          Ya, Hapus Data
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-notification" class="hidden fixed bottom-5 right-5 z-50 max-w-xs bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2.5">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toast-message">Notifikasi</span>
+  </div>
+
+  <!-- =====================================================================
+       APPLICATION SCRIPT (MODULAR WITH FIREBASE + GRACEFUL LOCAL FALLBACK)
+  ====================================================================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, doc, setDoc, getDocs, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    /* =========================================================================
+       1. KONFIGURASI ASESMEN UNIVERSAL (GANTI BAGIAN INI UNTUK MAPEL/BAB LAIN)
+       ========================================================================= */
+    const ASSESSMENT_CONFIG = {
+      assessmentId: "SMP_INGGRIS_9_SEM1_BAB3_FANTASY", // ID unik asesmen untuk penyimpanan & kunci sesi
+      mataPelajaran: "Bahasa Inggris",
+      jenjang: "SMP",
+      kelasFase: "9 / Fase D",
+      semester: "1 (Ganjil)",
+      alokasiWaktuMenit: 60,
+      kktp: 76,
+      teacherPin: "1234",          // PIN untuk membuka Dashboard Guru
+      resetToken: "ULANG-9D",      // Token opsional dari guru jika mengizinkan siswa mengulang
+      shuffleQuestions: true,      // Acak urutan soal
+      shuffleOptions: true,        // Acak urutan pilihan jawaban (untuk PG & PGK)
+
+      bab: "Bab 3. Journey to The Fantasy Worlds (Perjalanan ke Dunia Fantasi)",
+      subBab: [
+        "Unit 1: Andre and Princess Suripit — Tell a fantasy story; Language features: Using was and were",
+        "Unit 2: Back to the 90s — Analyze problem-solution faced by main characters; Language features: Indirect speech for questions; Reading narrative texts",
+        "Unit 3: The Multiverse Story of Timun Mas — Write a fantasy story; Structure of narrative text (Orientation, Complication, Resolution, Coda); Sequence of events & short poem"
+      ],
+
+      tujuanPembelajaran: [
+        { id: "TP1", text: "Menganalisis struktur teks naratif (tokoh, latar, komplikasi, resolusi, dan koda)." },
+        { id: "TP2", text: "Mengurutkan rangkaian peristiwa dalam sebuah cerita fantasi." },
+        { id: "TP3", text: "Menggunakan was/were untuk mendeskripsikan situasi dan kondisi dalam cerita." },
+        { id: "TP4", text: "Mengubah kalimat tanya langsung menjadi tidak langsung (indirect speech)." },
+        { id: "TP5", text: "Menulis kembali atau menyusun bagian dari sebuah cerita fantasi secara kreatif." }
+      ],
+
+      /* =======================================================================
+         BANK SOAL (20 SOAL: 10 PILIHAN GANDA, 5 PG KOMPLEKS, 5 BENAR/SALAH)
+         Tipe:
+         - 'pg'  : Pilihan Ganda Tunggal (answer: index angka 0..3)
+         - 'pgk' : Pilihan Ganda Kompleks (answer: array index benar, misal [0, 2])
+         - 'bs'  : Benar / Salah (answer: true atau false)
+         ======================================================================= */
+      questions: [
+        // --- 10 SOAL PILIHAN GANDA (PG) ---
+        {
+          id: "Q01",
+          type: "pg",
+          tp: "TP1",
+          difficulty: "Mudah",
+          indicator: "Mengidentifikasi bagian Orientation (tokoh dan latar) dalam teks naratif fantasi.",
+          stimulusTitle: "Excerpt from 'Andre and Princess Suripit'",
+          stimulus: "One rainy afternoon, Andre found an old dusty compass inside his grandfather's attic. When he pressed the golden button, a blinding blue light swallowed his room. Seconds later, he was standing in the middle of an enchanted emerald forest where giant mushrooms glowed like lanterns. A young girl in a silver cloak approached him and said, 'Welcome to Eldoria. I am Princess Suripit.'",
+          prompt: "Which part of the narrative text structure does the paragraph above represent, and what is its main function?",
+          options: [
+            "Orientation — it introduces the main characters (Andre and Princess Suripit) and the magical setting.",
+            "Complication — it shows the biggest battle between Andre and the forest monster.",
+            "Resolution — it explains how Andre finally returned safely to his grandfather's attic.",
+            "Coda — it provides a moral lesson about not touching old objects in the attic."
+          ],
+          answer: 0,
+          pembahasan: "Paragraf tersebut merupakan bagian <strong>Orientation</strong> karena memperkenalkan tokoh utama (Andre dan Princess Suripit), waktu kejadian (one rainy afternoon), serta latar tempat dunia fantasi (enchanted emerald forest)."
+        },
+        {
+          id: "Q02",
+          type: "pg",
+          tp: "TP1",
+          difficulty: "Sedang",
+          indicator: "Menganalisis konflik utama (Complication) dan upaya penyelesaian masalah tokoh.",
+          stimulusTitle: "Excerpt from 'Back to the 90s'",
+          stimulus: "Monita stared at the bulky payphone on the street corner. Her smartphone had zero signal, and the neon calendar inside the nearby cassette shop clearly read 'October 1995'. Without the digital portal key that fell into the drain, she could not return to 2026 before midnight. She quickly borrowed a bent wire hanger from a kind shopkeeper to fish the glowing key out of the narrow grate.",
+          prompt: "Based on the text, what is the main complication faced by Monita and how does she attempt to solve it?",
+          options: [
+            "She is trapped in 1995 without her portal key, so she uses a bent wire hanger to retrieve it from the drain.",
+            "She lost her money in a cassette shop, so she calls her parents using a modern smartphone.",
+            "She wants to buy rare 1990s cassettes, so she asks the shopkeeper to open the drain.",
+            "Her smartphone battery is dead, so she decides to stay permanently in October 1995."
+          ],
+          answer: 0,
+          pembahasan: "Konflik utama (<strong>Complication</strong>) adalah Monita terjebak di tahun 1995 dan kunci portalnya jatuh ke selokan. Upaya penyelesaiannya adalah meminjam gantungan kawat bengkok dari pemilik toko untuk mengambil kunci tersebut."
+        },
+        {
+          id: "Q03",
+          type: "pg",
+          tp: "TP1",
+          difficulty: "Menantang",
+          indicator: "Menyimpulkan pesan moral (Coda) dari teks naratif fantasi multiverse.",
+          stimulusTitle: "Excerpt from 'The Multiverse Story of Timun Mas'",
+          stimulus: "In Earth-404, Timun Mas did not throw the magical salt to defeat Buto Ijo. Instead, she noticed the giant was crying because a crystal thorn was stuck in his foot. Timun Mas bravely pulled the thorn out and shared her healing herbs. From that day on, humans and giants lived in harmony, proving that empathy can conquer fear faster than any weapon.",
+          prompt: "What is the implicit moral value (Coda) conveyed by this multiverse version of Timun Mas?",
+          options: [
+            "Compassion and understanding can resolve conflicts more peacefully than force or weapons.",
+            "Running away from giant creatures is always the safest strategy in another universe.",
+            "Magical items like salt and shrimp paste are useless in modern multiverse stories.",
+            "Giants are naturally weak creatures that easily lose against human weapons."
+          ],
+          answer: 0,
+          pembahasan: "Kalimat terakhir <em>'proving that empathy can conquer fear faster than any weapon'</em> menegaskan bahwa empati dan kasih sayang (compassion) mampu menyelesaikan konflik lebih damai daripada kekerasan."
+        },
+        {
+          id: "Q04",
+          type: "pg",
+          tp: "TP2",
+          difficulty: "Sedang",
+          indicator: "Menentukan urutan peristiwa logis dalam alur cerita fantasi.",
+          stimulusTitle: "Jumbled Events: Andre's Portal Journey",
+          stimulus: "1) Princess Suripit gave Andre a crystal map to find the Gate of Home.<br>2) Andre realized he was no longer in his bedroom.<br>3) After crossing the Whispering Bridge, Andre unlocked the portal and returned home.<br>4) A mysterious whirlwind pulled Andre into a glowing book.",
+          prompt: "Which arrangement puts the fantasy events into the most logical chronological order?",
+          options: [
+            "4 – 2 – 1 – 3",
+            "2 – 4 – 3 – 1",
+            "4 – 1 – 2 – 3",
+            "1 – 4 – 2 – 3"
+          ],
+          answer: 0,
+          pembahasan: "Urutan kronologis yang tepat: (4) Angin puyuh menarik Andre ke dalam buku bercahaya → (2) Andre sadar ia tidak lagi di kamarnya → (1) Putri Suripit memberi peta kristal → (3) Andre menyeberangi jembatan dan pulang."
+        },
+        {
+          id: "Q05",
+          type: "pg",
+          tp: "TP3",
+          difficulty: "Mudah",
+          indicator: "Memilih bentuk to be lampau (was/were) yang tepat sesuai subjek tunggal/jamak.",
+          stimulusTitle: "Setting Description in a Fantasy Story",
+          stimulus: "When Galang opened his eyes, the sky above him _____ deep purple, and three silver moons _____ shining brightly over the silent valley.",
+          prompt: "Choose the correct pair of past 'to be' verbs to complete the sentence accurately.",
+          options: [
+            "was / were",
+            "were / was",
+            "was / was",
+            "were / were"
+          ],
+          answer: 0,
+          pembahasan: "Subjek pertama <em>'the sky'</em> adalah tunggal (singular), sehingga menggunakan <strong>was</strong>. Subjek kedua <em>'three silver moons'</em> adalah jamak (plural), sehingga menggunakan <strong>were</strong>."
+        },
+        {
+          id: "Q06",
+          type: "pg",
+          tp: "TP3",
+          difficulty: "Sedang",
+          indicator: "Menerapkan was/were dalam kalimat negatif dan interogatif lampau pada konteks cerita.",
+          stimulusTitle: "Dialogue in 'Andre and Princess Suripit'",
+          stimulus: "Princess Suripit looked surprised when she saw Andre's sneakers. '_____ you from the world beyond the clouds? Because those shoes _____ definitely not made by our royal shoemakers!'",
+          prompt: "Which words best complete Princess Suripit's dialogue?",
+          options: [
+            "Were / were",
+            "Was / was",
+            "Were / was",
+            "Was / were"
+          ],
+          answer: 0,
+          pembahasan: "Untuk subjek <em>'you'</em> dalam bentuk lampau selalu digunakan <strong>Were</strong>. Untuk subjek jamak <em>'those shoes'</em> juga digunakan <strong>were</strong>."
+        },
+        {
+          id: "Q07",
+          type: "pg",
+          tp: "TP4",
+          difficulty: "Sedang",
+          indicator: "Mengubah kalimat tanya Yes/No langsung menjadi Indirect Speech.",
+          stimulusTitle: "Scene from 'Back to the 90s'",
+          stimulus: "Monita approached a teenager wearing a denim jacket and asked, 'Do you know the way to the city library?'",
+          prompt: "How should Monita's direct question be reported in indirect speech?",
+          options: [
+            "Monita asked if he knew the way to the city library.",
+            "Monita asked if he knows the way to the city library.",
+            "Monita asked did he know the way to the city library.",
+            "Monita asked whether does he know the way to the city library."
+          ],
+          answer: 0,
+          pembahasan: "Pada <em>indirect speech</em> untuk kalimat tanya Yes/No: gunakan kata hubung <strong>if / whether</strong>, ubah susunan menjadi kalimat pernyataan (S + V), dan mundurkan tensis dari Simple Present (<em>do know</em>) menjadi Simple Past (<em>knew</em>)."
+        },
+        {
+          id: "Q08",
+          type: "pg",
+          tp: "TP4",
+          difficulty: "Menantang",
+          indicator: "Mengubah kalimat tanya Wh-Question langsung menjadi Indirect Speech dengan perubahan tensis dan keterangan waktu.",
+          stimulusTitle: "Time Travel Investigation",
+          stimulus: "The time guardian looked at Andre and asked, 'Why did you open the forbidden portal yesterday?'",
+          prompt: "Which sentence correctly transforms the direct question into indirect speech?",
+          options: [
+            "The time guardian asked Andre why he had opened the forbidden portal the day before.",
+            "The time guardian asked Andre why did he open the forbidden portal yesterday.",
+            "The time guardian asked Andre why he opened the forbidden portal tomorrow.",
+            "The time guardian asked Andre if why he had opened the forbidden portal the day before."
+          ],
+          answer: 0,
+          pembahasan: "Pertanyaan Wh- menggunakan kata tanya <strong>why</strong> tanpa <em>if</em>, tensis Simple Past (<em>did open</em>) mundur menjadi Past Perfect (<em>had opened</em>), dan keterangan waktu <em>yesterday</em> berubah menjadi <em>the day before</em>."
+        },
+        {
+          id: "Q09",
+          type: "pg",
+          tp: "TP5",
+          difficulty: "Sedang",
+          indicator: "Memilih kalimat lanjutan yang paling kreatif dan koheren untuk mengembangkan alur cerita fantasi.",
+          stimulusTitle: "Creative Story Continuation",
+          stimulus: "Timun Mas activated her holographic bracelet in Cyber-Java 2099. Suddenly, the mechanical Buto Ijo froze in mid-air, his laser eyes flickering weakly. Timun Mas realized the giant robot was not evil—his core processor was simply corrupted by a shadow virus. Instead of attacking, she ____.",
+          prompt: "Which continuation best develops an unexpected and creative resolution for this sci-fi fantasy story?",
+          options: [
+            "connected her golden data-seed to his system and rebooted his kindness protocol.",
+            "ran back to her wooden hut in the village to hide under her bed.",
+            "threw regular kitchen salt at the giant robot until it rusted completely.",
+            "woke up from her sleep and realized she was late for school."
+          ],
+          answer: 0,
+          pembahasan: "Pilihan A mempertahankan konsistensi genre <em>Cyber-Java / Sci-Fi Fantasy</em> dengan memodifikasi elemen tradisional (biji emas menjadi <em>golden data-seed</em>) secara kreatif untuk menyelesaikan konflik."
+        },
+        {
+          id: "Q10",
+          type: "pg",
+          tp: "TP5",
+          difficulty: "Menantang",
+          indicator: "Menganalisis makna citraan (imagery) dalam puisi pendek bertema fantasi (Unit 3).",
+          stimulusTitle: "Short Fantasy Poem: 'Through the Silver Door'",
+          stimulus: "A clock without hands on a floating stone,<br>Where rivers of stardust quietly flow.<br>I stepped through the mist to a world unknown,<br>With courage the only map I know.",
+          prompt: "What does the last line 'With courage the only map I know' suggest about the speaker in the poem?",
+          options: [
+            "The speaker relies on bravery rather than physical tools to explore the unfamiliar fantasy world.",
+            "The speaker forgot to bring a GPS and got lost in a stone museum.",
+            "The speaker is afraid of floating stones and wants to go back immediately.",
+            "The speaker drew a map using stardust from the river."
+          ],
+          answer: 0,
+          pembahasan: "Metafora <em>'courage the only map I know'</em> bermakna bahwa tokoh 'aku' mengandalkan keberanian sebagai penunjuk arah utama saat menjelajahi dunia fantasi yang asing."
+        },
+
+        // --- 5 SOAL PILIHAN GANDA KOMPLEKS (PGK - MULTIPLE CORRECT ANSWERS) ---
+        {
+          id: "Q11",
+          type: "pgk",
+          tp: "TP1",
+          difficulty: "Sedang",
+          indicator: "Mengidentifikasi lebih dari satu unsur intrinsik dan struktur teks berdasarkan kutipan cerita.",
+          stimulusTitle: "The Clockwork Kingdom",
+          stimulus: "In the floating city of Chronos, gears turned beneath the cobblestone streets. Lira, a young clockmaker's apprentice, discovered that the Great Pendulum was cracking. If it stopped, the entire city would fall into the clouds below. Guided by a talking brass owl, Lira climbed the Tower of Minutes during a raging lightning storm and welded the crack using a starlight torch.",
+          prompt: "Which TWO statements accurately analyze the narrative elements of the text above? (Select 2 correct answers)",
+          options: [
+            "The setting takes place in a magical floating city called Chronos during a lightning storm.",
+            "The main complication is the cracking of the Great Pendulum that threatens to make the city fall.",
+            "The talking brass owl is the main antagonist who tries to destroy the Tower of Minutes.",
+            "The story ends without any resolution to the damaged pendulum."
+          ],
+          answer: [0, 1],
+          pembahasan: "Pernyataan 1 benar (latar di kota melayang Chronos saat badai petir) dan pernyataan 2 benar (komplikasi berupa retaknya Great Pendulum). Burung hantu kuningan justru membantu Lira, dan resolusi terjadi saat Lira mengelas retakan tersebut."
+        },
+        {
+          id: "Q12",
+          type: "pgk",
+          tp: "TP2",
+          difficulty: "Menantang",
+          indicator: "Mengevaluasi hubungan sebab-akibat dalam rangkaian peristiwa cerita fantasi.",
+          stimulusTitle: "Monita's 1990s Adventure",
+          stimulus: "Because Monita accidentally spilled soda on the arcade machine in 1994, the screen flashed a secret code. Entering that code opened a hidden door behind the snack counter. Inside, she found Professor Budi's time-stabilizer watch, which finally allowed her to calibrate her return jump to the present day.",
+          prompt: "Based on the sequence of events in the passage, which THREE statements are true? (Select 3 correct answers)",
+          options: [
+            "Spilling soda on the arcade machine triggered the appearance of a secret code.",
+            "Monita found the time-stabilizer watch before she entered the hidden door.",
+            "The hidden door was located behind the snack counter.",
+            "Finding Professor Budi's watch enabled Monita to return to the present day."
+          ],
+          answer: [0, 2, 3],
+          pembahasan: "Urutan peristiwa yang sesuai teks: (1) Tumpahan soda memunculkan kode rahasia, (3) Pintu rahasia berada di belakang konter makanan ringan, dan (4) Jam penstabil waktu membantu Monita kembali ke masa kini. Pernyataan 2 salah karena ia menemukan jam <em>setelah</em> masuk pintu rahasia."
+        },
+        {
+          id: "Q13",
+          type: "pgk",
+          tp: "TP3",
+          difficulty: "Sedang",
+          indicator: "Mengidentifikasi kalimat yang menggunakan 'was' dan 'were' secara gramatikal tepat dalam narasi.",
+          stimulusTitle: "Grammar Check: Describing Past Fantasy Scenes",
+          stimulus: "Read the following four sentences drafted by students for their fantasy story orientation.",
+          prompt: "Which TWO sentences use 'was' or 'were' correctly? (Select 2 correct answers)",
+          options: [
+            "Neither Andre nor Princess Suripit was aware of the shadow dragon behind the waterfall.",
+            "The ancient trees in the forbidden valley was whispering secrets to the wind.",
+            "There were dozens of glowing fireflies guiding us through the dark cavern.",
+            "You was the only traveler brave enough to cross the crystal bridge."
+          ],
+          answer: [0, 2],
+          pembahasan: "Kalimat 1 benar karena konstruksi <em>Neither A nor B</em> mengikuti subjek terdekat (<em>Princess Suripit</em> - tunggal → <strong>was</strong>). Kalimat 3 benar karena <em>dozens of glowing fireflies</em> jamak → <strong>were</strong>. Kalimat 2 seharusnya <em>were</em>, dan kalimat 4 seharusnya <em>were</em>."
+        },
+        {
+          id: "Q14",
+          type: "pgk",
+          tp: "TP4",
+          difficulty: "Menantang",
+          indicator: "Memilih transformasi kalimat tanya tidak langsung (Indirect Speech) yang tepat dari beberapa variasi dialog.",
+          stimulusTitle: "Reporting Questions from the Multiverse",
+          stimulus: "Direct Question: Timun Mas asked the guardian, 'Can you show me the portal to Universe-7?'",
+          prompt: "Which TWO indirect speech forms are grammatically acceptable to report Timun Mas's question? (Select 2 correct answers)",
+          options: [
+            "Timun Mas asked the guardian if he could show her the portal to Universe-7.",
+            "Timun Mas asked the guardian whether he could show her the portal to Universe-7.",
+            "Timun Mas asked the guardian if could he show her the portal to Universe-7.",
+            "Timun Mas asked the guardian that he can show her the portal to Universe-7."
+          ],
+          answer: [0, 1],
+          pembahasan: "Kalimat tanya Yes/No dengan modal <em>Can</em> diubah menjadi <em>could</em> setelah subjek (<em>he could show</em>) dan diawali kata hubung <strong>if</strong> atau <strong>whether</strong>. Pilihan C salah karena masih memakai susunan tanya (<em>could he</em>), dan D salah memakai <em>that</em> serta <em>can</em>."
+        },
+        {
+          id: "Q15",
+          type: "pgk",
+          tp: "TP5",
+          difficulty: "Sedang",
+          indicator: "Menentukan teknik penulisan kreatif yang efektif untuk membangun cerita fantasi yang menarik.",
+          stimulusTitle: "Creative Writing Workshop: Fantasy Narrative",
+          stimulus: "You are revising a draft of 'The Multiverse Story of Timun Mas' to make the complication and setting more vivid for Grade 9 readers.",
+          prompt: "Which THREE writing strategies will best improve the quality of your fantasy narrative? (Select 3 correct answers)",
+          options: [
+            "Using sensory details (sight, sound, atmosphere) to describe magical worlds and creatures.",
+            "Introducing unexpected twists so the hero solves problems creatively rather than predictably.",
+            "Using simple past tense consistently (including was/were) to narrate past events.",
+            "Listing all moral lessons in the very first sentence before introducing any character."
+          ],
+          answer: [0, 1, 2],
+          pembahasan: "Penulisan cerita fantasi yang baik menggunakan detail sensorik (imaji), kejutan alur (unexpected twists), dan konsistensi <em>past tense</em>. Pesan moral (Coda) ditempatkan di akhir cerita, bukan di kalimat pertama."
+        },
+
+        // --- 5 SOAL BENAR / SALAH (BS - TRUE / FALSE) ---
+        {
+          id: "Q16",
+          type: "bs",
+          tp: "TP1",
+          difficulty: "Mudah",
+          indicator: "Menentukan kebenaran pernyataan terkait fungsi bagian Resolution dalam teks naratif.",
+          stimulusTitle: "Narrative Structure Concept",
+          stimulus: "At the end of 'Andre and Princess Suripit', Andre finally solves the riddle of the Sun Stone, restores peace to Eldoria, and steps back into his own bedroom just before dinner.",
+          prompt: "Statement: In a narrative text, the part where the main problem is resolved and the characters return to a state of balance is called the 'Resolution'.",
+          answer: true,
+          pembahasan: "<strong>BENAR (True)</strong>. <em>Resolution</em> adalah bagian struktur teks naratif tempat konflik utama diselesaikan oleh tokoh, baik berakhir bahagia maupun sedih, sehingga keadaan kembali stabil."
+        },
+        {
+          id: "Q17",
+          type: "bs",
+          tp: "TP2",
+          difficulty: "Sedang",
+          indicator: "Mengevaluasi ketepatan urutan peristiwa berdasarkan kronologi waktu dalam teks.",
+          stimulusTitle: "Back to the 90s: Chronology Check",
+          stimulus: "First, Monita heard a strange humming sound from her grandmother's old Walkman. Next, she put on the foam headphones and pressed the 'Play' button. Immediately after pressing 'Play', her modern bedroom walls dissolved into a bustling 1990s schoolyard.",
+          prompt: "Statement: According to the text, Monita's bedroom walls dissolved into a 1990s schoolyard BEFORE she pressed the 'Play' button on the Walkman.",
+          answer: false,
+          pembahasan: "<strong>SALAH (False)</strong>. Teks menyebutkan <em>'Immediately after pressing Play, her modern bedroom walls dissolved...'</em>, artinya perubahan latar terjadi <strong>setelah</strong> ia menekan tombol Play, bukan sebelumnya."
+        },
+        {
+          id: "Q18",
+          type: "bs",
+          tp: "TP3",
+          difficulty: "Mudah",
+          indicator: "Menilai ketepatan penggunaan 'were' dengan subjek kata benda tak terhitung/tunggal.",
+          stimulusTitle: "Grammar Verification",
+          stimulus: "Consider the sentence: 'The magical potion inside the crystal bottle were glowing brightly in the dark cave.'",
+          prompt: "Statement: The use of the word 'were' in the sentence above is grammatically correct.",
+          answer: false,
+          pembahasan: "<strong>SALAH (False)</strong>. Subjek inti kalimat tersebut adalah <em>'The magical potion'</em> (tunggal/uncountable), sehingga kata kerja lampau yang tepat seharusnya <strong>was</strong>, bukan <em>were</em>."
+        },
+        {
+          id: "Q19",
+          type: "bs",
+          tp: "TP4",
+          difficulty: "Sedang",
+          indicator: "Memverifikasi aturan perubahan susunan kata dalam Indirect Speech untuk pertanyaan.",
+          stimulusTitle: "Indirect Speech Rule Check",
+          stimulus: "Direct: Andre asked, 'Where is the exit portal?'<br>Indirect: Andre asked where the exit portal was.",
+          prompt: "Statement: When changing a direct Wh-question into indirect speech, the auxiliary verb ('was') is placed AFTER the subject ('the exit portal') instead of before it.",
+          answer: true,
+          pembahasan: "<strong>BENAR (True)</strong>. Dalam kalimat tanya tidak langsung (<em>indirect speech</em>), susunan kalimat berubah dari bentuk tanya (V + S) menjadi bentuk pernyataan (S + V), yakni <em>'...where the exit portal was'</em>."
+        },
+        {
+          id: "Q20",
+          type: "bs",
+          tp: "TP5",
+          difficulty: "Sedang",
+          indicator: "Mengevaluasi kesesuaian unsur kebahasaan dan kreativitas dalam penulisan ulang cerita fantasi.",
+          stimulusTitle: "Rewriting a Fantasy Ending",
+          stimulus: "In a creative retelling of Timun Mas, a writer decides to change the setting to an underwater coral kingdom while keeping the core theme of bravery and resourcefulness.",
+          prompt: "Statement: Adapting a traditional folktale into a new setting (such as an underwater kingdom or multiverse) while preserving its core values is an effective way to write a creative fantasy story.",
+          answer: true,
+          pembahasan: "<strong>BENAR (True)</strong>. Mengadaptasi latar cerita rakyat ke dunia baru (seperti kerajaan bawah laut atau <em>multiverse</em>) sambil mempertahankan nilai utama tokoh merupakan teknik penulisan ulang kreatif (<em>creative retelling</em>) yang diajarkan pada Unit 3."
+        }
+      ]
+    };
+
+    /* =========================================================================
+       2. FIREBASE INITIALIZATION & HYBRID PERSISTENCE LAYER
+       ========================================================================= */
+    let db = null;
+    let auth = null;
+    let currentUser = null;
+    let isCloudAvailable = false;
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const COLLECTION_NAME = `rekap_${ASSESSMENT_CONFIG.assessmentId.toLowerCase()}`;
+    const LOCAL_RECAP_KEY = `RECAP_STORAGE_${ASSESSMENT_CONFIG.assessmentId}`;
+    const LOCAL_LOCK_PREFIX = `LOCK_${ASSESSMENT_CONFIG.assessmentId}_`;
+
+    async function initCloudBackend() {
+      try {
+        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+          const firebaseConfig = JSON.parse(__firebase_config);
+          const app = initializeApp(firebaseConfig);
+          auth = getAuth(app);
+          db = getFirestore(app);
+
+          if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+            const cred = await signInWithCustomToken(auth, __initial_auth_token);
+            currentUser = cred.user;
+          } else {
+            const cred = await signInAnonymously(auth);
+            currentUser = cred.user;
+          }
+
+          isCloudAvailable = true;
+          updateSyncBadge('cloud', 'Terhubung Cloud');
+        } else {
+          updateSyncBadge('local', 'Mode Lokal');
+        }
+      } catch (err) {
+        console.warn("Cloud backend fallback to local storage:", err);
+        isCloudAvailable = false;
+        updateSyncBadge('local', 'Mode Offline');
+      }
+    }
+
+    function updateSyncBadge(mode, text) {
+      const badge = document.getElementById('sync-badge');
+      const label = document.getElementById('sync-badge-text');
+      if (!badge || !label) return;
+      label.textContent = text;
+      if (mode === 'cloud') {
+        badge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200";
+        badge.querySelector('span').className = "w-2 h-2 rounded-full bg-emerald-500";
+      } else {
+        badge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200";
+        badge.querySelector('span').className = "w-2 h-2 rounded-full bg-amber-500";
+      }
+    }
+
+    function normalizeStudentKey(name, kelas, absen) {
+      const cleanName = String(name || '').trim().toLowerCase().replace(/\s+/g, '_');
+      const cleanClass = String(kelas || '').trim().toLowerCase().replace(/\s+/g, '');
+      const cleanAbsen = String(absen || '').trim().padStart(2, '0');
+      return `${cleanClass}_${cleanAbsen}_${cleanName}`;
+    }
+
+    function getLocalRecords() {
+      try {
+        const raw = localStorage.getItem(LOCAL_RECAP_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveLocalRecord(record) {
+      try {
+        const records = getLocalRecords();
+        const idx = records.findIndex(r => r.studentKey === record.studentKey);
+        if (idx >= 0) {
+          records[idx] = record;
+        } else {
+          records.push(record);
+        }
+        localStorage.setItem(LOCAL_RECAP_KEY, JSON.stringify(records));
+        localStorage.setItem(LOCAL_LOCK_PREFIX + record.studentKey, JSON.stringify(record));
+        localStorage.setItem(LOCAL_LOCK_PREFIX + 'LAST_DEVICE_SUBMISSION', JSON.stringify(record));
+      } catch (e) {
+        console.warn("Local storage write warning:", e);
+      }
+    }
+
+    async function saveSubmissionToBackend(record) {
+      // Always save locally first for zero-error reliability
+      saveLocalRecord(record);
+
+      if (!isCloudAvailable || !db || !currentUser) {
+        return { synced: false, reason: 'offline' };
+      }
+
+      try {
+        const docRef = doc(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME, record.studentKey);
+        // Serialize complex nested arrays/objects safely
+        const payload = {
+          ...record,
+          tpSummaryJson: JSON.stringify(record.tpSummary),
+          answersDetailJson: JSON.stringify(record.answersDetail),
+          updatedAt: new Date().toISOString()
+        };
+        delete payload.tpSummary;
+        delete payload.answersDetail;
+
+        await setDoc(docRef, payload);
+        return { synced: true };
+      } catch (err) {
+        console.error("Firestore save error:", err);
+        return { synced: false, reason: err.message };
+      }
+    }
+
+    async function fetchAllSubmissions() {
+      const localMap = new Map();
+      getLocalRecords().forEach(item => localMap.set(item.studentKey, item));
+
+      if (isCloudAvailable && db && currentUser) {
+        try {
+          const colRef = collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME);
+          const snap = await getDocs(colRef);
+          snap.forEach(docSnap => {
+            const data = docSnap.data();
+            const parsed = {
+              ...data,
+              tpSummary: data.tpSummaryJson ? JSON.parse(data.tpSummaryJson) : (data.tpSummary || {}),
+              answersDetail: data.answersDetailJson ? JSON.parse(data.answersDetailJson) : (data.answersDetail || [])
+            };
+            localMap.set(parsed.studentKey, parsed);
+          });
+        } catch (err) {
+          console.warn("Firestore read warning, showing local records:", err);
+        }
+      }
+
+      const combined = Array.from(localMap.values());
+      combined.sort((a, b) => (b.submittedAt || '').localeCompare(a.submittedAt || ''));
+      return combined;
+    }
+
+    async function checkExistingStudentSubmission(studentKey) {
+      // 1. Check local storage lock
+      try {
+        const localLock = localStorage.getItem(LOCAL_LOCK_PREFIX + studentKey);
+        if (localLock) return JSON.parse(localLock);
+      } catch (e) {}
+
+      // 2. Check cloud records for cross-device retake prevention
+      if (isCloudAvailable && db && currentUser) {
+        try {
+          const all = await fetchAllSubmissions();
+          const found = all.find(r => r.studentKey === studentKey);
+          if (found) return found;
+        } catch (e) {}
+      }
+      return null;
+    }
+
+    /* =========================================================================
+       3. APPLICATION STATE & EXAM ENGINE
+       ========================================================================= */
+    const state = {
+      student: null,
+      examQuestions: [],     // Shuffled questions with option mappings
+      currentIndex: 0,
+      userAnswers: {},       // { questionId: number | number[] | boolean }
+      flagged: {},           // { questionId: true }
+      startTimeMs: null,
+      remainingSeconds: ASSESSMENT_CONFIG.alokasiWaktuMenit * 60,
+      timerInterval: null,
+      isSubmitting: false,
+      lastResultRecord: null,
+      teacherRecordsCache: []
+    };
+
+    // Utility: Fisher-Yates Shuffle
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // Prepare Exam Questions (Shuffling questions & options while preserving grading accuracy)
+    function prepareExamQuestions() {
+      let baseQuestions = [...ASSESSMENT_CONFIG.questions];
+      if (ASSESSMENT_CONFIG.shuffleQuestions) {
+        baseQuestions = shuffleArray(baseQuestions);
+      }
+
+      return baseQuestions.map(q => {
+        if ((q.type === 'pg' || q.type === 'pgk') && Array.isArray(q.options)) {
+          const indexedOptions = q.options.map((text, originalIdx) => ({ text, originalIdx }));
+          const finalOptions = ASSESSMENT_CONFIG.shuffleOptions ? shuffleArray(indexedOptions) : indexedOptions;
+          return {
+            ...q,
+            renderedOptions: finalOptions
+          };
+        }
+        return {
+          ...q,
+          renderedOptions: null
+        };
+      });
+    }
+
+    /* =========================================================================
+       4. UI POPULATION & VIEW NAVIGATION
+       ========================================================================= */
+    function switchView(viewId) {
+      ['view-landing', 'view-exam', 'view-result', 'view-teacher'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('hidden', id !== viewId);
+      });
+
+      const timerBox = document.getElementById('header-timer-box');
+      if (timerBox) {
+        if (viewId === 'view-exam') {
+          timerBox.classList.remove('hidden');
+          timerBox.classList.add('flex');
+        } else {
+          timerBox.classList.add('hidden');
+          timerBox.classList.remove('flex');
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast-notification');
+      const textEl = document.getElementById('toast-message');
+      if (!toast || !textEl) return;
+      textEl.textContent = msg;
+      toast.classList.remove('hidden');
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3200);
+    }
+
+    function renderLandingInfo() {
+      document.getElementById('nav-subject-title').textContent = `Asesmen ${ASSESSMENT_CONFIG.mataPelajaran}`;
+      document.getElementById('nav-class-badge').textContent = `${ASSESSMENT_CONFIG.jenjang} Kelas ${ASSESSMENT_CONFIG.kelasFase}`;
+      document.getElementById('nav-chapter-subtitle').textContent = ASSESSMENT_CONFIG.bab;
+
+      document.getElementById('hero-meta-tag').textContent = `${ASSESSMENT_CONFIG.jenjang} • Kelas ${ASSESSMENT_CONFIG.kelasFase} • Semester ${ASSESSMENT_CONFIG.semester}`;
+      document.getElementById('hero-chapter-title').textContent = ASSESSMENT_CONFIG.bab;
+      document.getElementById('hero-subject-desc').textContent = `Asesmen Sumatif Lingkup Materi — Mata Pelajaran ${ASSESSMENT_CONFIG.mataPelajaran}. Mengukur ketercapaian tujuan pembelajaran secara objektif, analitis, dan mendalam.`;
+
+      const pgCount = ASSESSMENT_CONFIG.questions.filter(q => q.type === 'pg').length;
+      const pgkCount = ASSESSMENT_CONFIG.questions.filter(q => q.type === 'pgk').length;
+      const bsCount = ASSESSMENT_CONFIG.questions.filter(q => q.type === 'bs').length;
+
+      document.getElementById('info-total-questions').textContent = `${ASSESSMENT_CONFIG.questions.length} Soal`;
+      document.getElementById('info-duration').textContent = `${ASSESSMENT_CONFIG.alokasiWaktuMenit} Menit`;
+      document.getElementById('instruction-duration').textContent = `${ASSESSMENT_CONFIG.alokasiWaktuMenit} menit`;
+      document.getElementById('info-kktp').textContent = ASSESSMENT_CONFIG.kktp;
+      document.getElementById('info-question-types').textContent = `${pgCount} PG • ${pgkCount} PGK • ${bsCount} B/S`;
+      document.getElementById('teacher-reset-token-display').textContent = ASSESSMENT_CONFIG.resetToken;
+
+      // Render Sub-bab
+      const subBabList = document.getElementById('list-subbab');
+      subBabList.innerHTML = ASSESSMENT_CONFIG.subBab.map(item => `
+        <li class="flex items-start gap-2.5">
+          <i class="fa-solid fa-circle-check text-indigo-500 mt-1 text-xs shrink-0"></i>
+          <span>${item}</span>
+        </li>
+      `).join('');
+
+      // Render Tujuan Pembelajaran
+      const tpList = document.getElementById('list-tp');
+      tpList.innerHTML = ASSESSMENT_CONFIG.tujuanPembelajaran.map(tp => `
+        <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+          <span class="px-2 py-0.5 rounded-md bg-emerald-600 text-white font-display font-bold text-xs shrink-0 mt-0.5">${tp.id}</span>
+          <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${tp.text}</p>
+        </div>
+      `).join('');
+
+      // Check if device already has a completed submission
+      try {
+        const lastDeviceSub = localStorage.getItem(LOCAL_LOCK_PREFIX + 'LAST_DEVICE_SUBMISSION');
+        if (lastDeviceSub) {
+          const parsed = JSON.parse(lastDeviceSub);
+          state.lastResultRecord = parsed;
+          const warnBox = document.getElementById('retake-warning-box');
+          const warnMsg = document.getElementById('retake-warning-msg');
+          warnBox.classList.remove('hidden');
+          warnMsg.textContent = `Perangkat ini mencatat hasil atas nama ${parsed.studentName} (${parsed.studentClass} / Absen ${parsed.studentAbsen}) dengan Nilai Akhir ${parsed.finalScore}.`;
+        }
+      } catch (e) {}
+    }
+
+    /* =========================================================================
+       5. TIMER & EXAM INTERACTION LOGIC
+       ========================================================================= */
+    function formatDurationMMSS(totalSec) {
+      const mins = Math.floor(Math.max(0, totalSec) / 60);
+      const secs = Math.max(0, totalSec) % 60;
+      return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function formatElapsedHuman(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m} menit ${s} detik`;
+    }
+
+    function startCountdownTimer() {
+      clearInterval(state.timerInterval);
+      state.remainingSeconds = ASSESSMENT_CONFIG.alokasiWaktuMenit * 60;
+      updateTimerUI();
+
+      state.timerInterval = setInterval(() => {
+        state.remainingSeconds -= 1;
+        updateTimerUI();
+
+        if (state.remainingSeconds <= 0) {
+          clearInterval(state.timerInterval);
+          showToast("Waktu habis! Jawaban Anda dikumpulkan otomatis.");
+          finalizeAndSubmitExam(true);
+        }
+      }, 1000);
+    }
+
+    function updateTimerUI() {
+      const display = document.getElementById('header-timer-display');
+      const box = document.getElementById('header-timer-box');
+      const icon = document.getElementById('header-timer-icon');
+      if (!display || !box) return;
+
+      display.textContent = formatDurationMMSS(state.remainingSeconds);
+
+      if (state.remainingSeconds <= 180) {
+        // < 3 minutes: Urgent pulsing red
+        box.className = "flex items-center gap-2 px-3 py-1.5 rounded-xl bg-rose-600 border border-rose-700 text-white font-mono font-bold text-sm sm:text-base timer-urgent shadow-sm";
+        icon.className = "fa-solid fa-stopwatch text-white";
+      } else if (state.remainingSeconds <= 600) {
+        // < 10 minutes: Amber warning
+        box.className = "flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-100 border border-amber-300 text-amber-900 font-mono font-bold text-sm sm:text-base";
+        icon.className = "fa-regular fa-clock text-amber-700";
+      } else {
+        box.className = "flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 font-mono font-bold text-sm sm:text-base";
+        icon.className = "fa-regular fa-clock text-indigo-600";
+      }
+    }
+
+    function isQuestionAnswered(qId) {
+      const ans = state.userAnswers[qId];
+      if (ans === undefined || ans === null) return false;
+      if (Array.isArray(ans)) return ans.length > 0;
+      return true;
+    }
+
+    function renderQuestionNavigators() {
+      const grids = [document.getElementById('desktop-nav-grid'), document.getElementById('mobile-nav-grid')];
+      let answeredCount = 0;
+
+      state.examQuestions.forEach(q => {
+        if (isQuestionAnswered(q.id)) answeredCount++;
+      });
+
+      document.getElementById('exam-progress-pill').textContent = `Terjawab: ${answeredCount} / ${state.examQuestions.length}`;
+      document.getElementById('sidebar-answered-count').textContent = `${answeredCount}/${state.examQuestions.length} Selesai`;
+
+      grids.forEach(grid => {
+        if (!grid) return;
+        grid.innerHTML = state.examQuestions.map((q, idx) => {
+          const isCurrent = idx === state.currentIndex;
+          const isAnswered = isQuestionAnswered(q.id);
+          const isFlagged = Boolean(state.flagged[q.id]);
+
+          let btnClass = "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200";
+          if (isFlagged) {
+            btnClass = "bg-amber-400 text-amber-950 border-amber-500 font-bold";
+          } else if (isAnswered) {
+            btnClass = "bg-emerald-500 text-white border-emerald-600 font-bold";
+          }
+
+          if (isCurrent) {
+            btnClass += " ring-2 ring-indigo-600 ring-offset-1";
+          }
+
+          return `
+            <button type="button" data-q-idx="${idx}" class="nav-num-btn h-10 rounded-xl border text-xs font-semibold transition flex items-center justify-center ${btnClass}">
+              ${idx + 1}
+            </button>
+          `;
+        }).join('');
+
+        grid.querySelectorAll('.nav-num-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.currentIndex = Number(btn.dataset.qIdx);
+            renderCurrentQuestion();
+            document.getElementById('mobile-nav-drawer').classList.add('hidden');
+          });
+        });
+      });
+    }
+
+    function renderCurrentQuestion() {
+      const q = state.examQuestions[state.currentIndex];
+      if (!q) return;
+
+      document.getElementById('q-number-badge').textContent = `Soal ${state.currentIndex + 1} dari ${state.examQuestions.length}`;
+
+      const typeLabels = {
+        pg: "Pilihan Ganda",
+        pgk: "Pilihan Ganda Kompleks",
+        bs: "Benar / Salah"
+      };
+      document.getElementById('q-type-badge').textContent = typeLabels[q.type] || q.type;
+      document.getElementById('q-difficulty-badge').textContent = `Level: ${q.difficulty}`;
+      document.getElementById('q-tp-badge').textContent = q.tp;
+
+      // Stimulus
+      const stimBox = document.getElementById('q-stimulus-box');
+      if (q.stimulus) {
+        stimBox.classList.remove('hidden');
+        document.getElementById('q-stimulus-title').textContent = q.stimulusTitle || "Stimulus Bacaan";
+        document.getElementById('q-stimulus-content').innerHTML = q.stimulus;
+      } else {
+        stimBox.classList.add('hidden');
+      }
+
+      document.getElementById('q-prompt-text').textContent = q.prompt;
+
+      const hintMap = {
+        pg: "Pilih satu jawaban yang paling tepat.",
+        pgk: "Pilih SEMUA pernyataan yang benar (jawaban benar lebih dari satu).",
+        bs: "Tentukan apakah pernyataan di atas BENAR atau SALAH berdasarkan bacaan/kaidah."
+      };
+      document.getElementById('q-instruction-hint').textContent = hintMap[q.type] || "";
+
+      // Render Options
+      const optionsContainer = document.getElementById('q-options-container');
+      const currentAns = state.userAnswers[q.id];
+
+      if (q.type === 'pg') {
+        const letters = ['A', 'B', 'C', 'D', 'E'];
+        optionsContainer.innerHTML = q.renderedOptions.map((opt, idx) => {
+          const isSelected = currentAns === opt.originalIdx;
+          return `
+            <button type="button" data-orig-idx="${opt.originalIdx}"
+              class="pg-option-btn w-full text-left p-4 rounded-xl border-2 transition flex items-start gap-3.5 ${
+                isSelected
+                  ? 'border-indigo-600 bg-indigo-50/70 text-indigo-950 shadow-xs'
+                  : 'border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50 text-slate-800'
+              }">
+              <span class="w-8 h-8 rounded-lg flex items-center justify-center font-display font-bold text-sm shrink-0 ${
+                isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600'
+              }">${letters[idx]}</span>
+              <span class="text-sm sm:text-[15px] leading-relaxed pt-1">${opt.text}</span>
+            </button>
+          `;
+        }).join('');
+
+        optionsContainer.querySelectorAll('.pg-option-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.userAnswers[q.id] = Number(btn.dataset.origIdx);
+            renderCurrentQuestion();
+            renderQuestionNavigators();
+          });
+        });
+
+      } else if (q.type === 'pgk') {
+        const selectedArr = Array.isArray(currentAns) ? currentAns : [];
+        optionsContainer.innerHTML = q.renderedOptions.map(opt => {
+          const isChecked = selectedArr.includes(opt.originalIdx);
+          return `
+            <button type="button" data-orig-idx="${opt.originalIdx}"
+              class="pgk-option-btn w-full text-left p-4 rounded-xl border-2 transition flex items-start gap-3.5 ${
+                isChecked
+                  ? 'border-violet-600 bg-violet-50/70 text-violet-950 shadow-xs'
+                  : 'border-slate-200 bg-white hover:border-violet-300 hover:bg-slate-50 text-slate-800'
+              }">
+              <span class="w-7 h-7 rounded-lg flex items-center justify-center text-sm shrink-0 mt-0.5 border ${
+                isChecked ? 'bg-violet-600 border-violet-600 text-white' : 'bg-white border-slate-300 text-transparent'
+              }">
+                <i class="fa-solid fa-check text-xs"></i>
+              </span>
+              <span class="text-sm sm:text-[15px] leading-relaxed">${opt.text}</span>
+            </button>
+          `;
+        }).join('');
+
+        optionsContainer.querySelectorAll('.pgk-option-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const origIdx = Number(btn.dataset.origIdx);
+            const existing = Array.isArray(state.userAnswers[q.id]) ? [...state.userAnswers[q.id]] : [];
+            const pos = existing.indexOf(origIdx);
+            if (pos >= 0) {
+              existing.splice(pos, 1);
+            } else {
+              existing.push(origIdx);
+            }
+            state.userAnswers[q.id] = existing;
+            renderCurrentQuestion();
+            renderQuestionNavigators();
+          });
+        });
+
+      } else if (q.type === 'bs') {
+        const choices = [
+          { val: true, label: "BENAR (True)", icon: "fa-circle-check", activeClass: "border-emerald-600 bg-emerald-50 text-emerald-950", badgeClass: "bg-emerald-600 text-white" },
+          { val: false, label: "SALAH (False)", icon: "fa-circle-xmark", activeClass: "border-rose-600 bg-rose-50 text-rose-950", badgeClass: "bg-rose-600 text-white" }
+        ];
+
+        optionsContainer.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            ${choices.map(c => {
+              const isSelected = currentAns === c.val;
+              return `
+                <button type="button" data-bs-val="${c.val}"
+                  class="bs-option-btn p-4 rounded-xl border-2 transition flex items-center gap-3.5 ${
+                    isSelected ? c.activeClass : 'border-slate-200 bg-white hover:border-slate-300 text-slate-800'
+                  }">
+                  <span class="w-9 h-9 rounded-xl flex items-center justify-center text-base shrink-0 ${
+                    isSelected ? c.badgeClass : 'bg-slate-100 text-slate-500'
+                  }">
+                    <i class="fa-solid ${c.icon}"></i>
+                  </span>
+                  <span class="font-display font-bold text-sm sm:text-base">${c.label}</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+
+        optionsContainer.querySelectorAll('.bs-option-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            state.userAnswers[q.id] = btn.dataset.bsVal === 'true';
+            renderCurrentQuestion();
+            renderQuestionNavigators();
+          });
+        });
+      }
+
+      // Prev / Next Button States
+      document.getElementById('btn-prev-q').disabled = state.currentIndex === 0;
+      const nextBtn = document.getElementById('btn-next-q');
+      if (state.currentIndex === state.examQuestions.length - 1) {
+        nextBtn.innerHTML = `<span>Selesai</span> <i class="fa-solid fa-check"></i>`;
+        nextBtn.className = "px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition flex items-center gap-2";
+      } else {
+        nextBtn.innerHTML = `<span>Selanjutnya</span> <i class="fa-solid fa-chevron-right"></i>`;
+        nextBtn.className = "px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition flex items-center gap-2";
+      }
+
+      // Flag Button State
+      const isFlagged = Boolean(state.flagged[q.id]);
+      const flagBtn = document.getElementById('btn-flag-q');
+      const flagIcon = document.getElementById('flag-icon');
+      const flagText = document.getElementById('flag-text');
+      if (isFlagged) {
+        flagBtn.className = "px-4 py-2.5 rounded-xl border border-amber-500 bg-amber-400 text-amber-950 font-bold text-sm transition flex items-center gap-2";
+        flagIcon.className = "fa-solid fa-flag";
+        flagText.textContent = "Ditandai Ragu";
+      } else {
+        flagBtn.className = "px-4 py-2.5 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-800 font-semibold text-sm transition flex items-center gap-2";
+        flagIcon.className = "fa-regular fa-flag";
+        flagText.textContent = "Ragu-ragu";
+      }
+    }
+
+    /* =========================================================================
+       6. GRADING, DIAGNOSTICS & RESULT RENDERING
+       ========================================================================= */
+    function evaluateQuestion(q, userAns) {
+      if (userAns === undefined || userAns === null || (Array.isArray(userAns) && userAns.length === 0)) {
+        return { status: 'blank', isCorrect: false, earnedRatio: 0 };
+      }
+
+      if (q.type === 'pg' || q.type === 'bs') {
+        const isCorrect = userAns === q.answer;
+        return { status: isCorrect ? 'correct' : 'wrong', isCorrect, earnedRatio: isCorrect ? 1 : 0 };
+      }
+
+      if (q.type === 'pgk') {
+        const expected = [...q.answer].sort((a, b) => a - b);
+        const actual = [...userAns].sort((a, b) => a - b);
+        const exactMatch = expected.length === actual.length && expected.every((val, idx) => val === actual[idx]);
+        return { status: exactMatch ? 'correct' : 'wrong', isCorrect: exactMatch, earnedRatio: exactMatch ? 1 : 0 };
+      }
+
+      return { status: 'wrong', isCorrect: false, earnedRatio: 0 };
+    }
+
+    function formatAnswerDisplay(q, ans) {
+      if (ans === undefined || ans === null || (Array.isArray(ans) && ans.length === 0)) {
+        return "<span class='italic text-slate-400'>Tidak dijawab</span>";
+      }
+      if (q.type === 'bs') {
+        return ans === true ? "BENAR (True)" : "SALAH (False)";
+      }
+      if (q.type === 'pg') {
+        return q.options[ans] || "-";
+      }
+      if (q.type === 'pgk') {
+        return `<ul class="list-disc pl-4 space-y-0.5">${ans.map(i => `<li>${q.options[i]}</li>`).join('')}</ul>`;
+      }
+      return String(ans);
+    }
+
+    async function finalizeAndSubmitExam(autoSubmitted = false) {
+      if (state.isSubmitting) return;
+      state.isSubmitting = true;
+      clearInterval(state.timerInterval);
+      document.getElementById('modal-submit-confirm').classList.add('hidden');
+
+      const elapsedSec = Math.max(1, Math.round((Date.now() - state.startTimeMs) / 1000));
+      const totalQ = ASSESSMENT_CONFIG.questions.length;
+
+      let correctCount = 0;
+      let wrongCount = 0;
+      let blankCount = 0;
+
+      // TP Accumulator
+      const tpStats = {};
+      ASSESSMENT_CONFIG.tujuanPembelajaran.forEach(tp => {
+        tpStats[tp.id] = { id: tp.id, text: tp.text, total: 0, correct: 0, percentage: 0, mastered: false };
+      });
+
+      // Evaluate in canonical question order for clean review & reporting
+      const answersDetail = ASSESSMENT_CONFIG.questions.map(q => {
+        const userAns = state.userAnswers[q.id];
+        const evalRes = evaluateQuestion(q, userAns);
+
+        if (evalRes.status === 'correct') correctCount++;
+        else if (evalRes.status === 'blank') blankCount++;
+        else wrongCount++;
+
+        if (tpStats[q.tp]) {
+          tpStats[q.tp].total += 1;
+          if (evalRes.isCorrect) tpStats[q.tp].correct += 1;
+        }
+
+        return {
+          questionId: q.id,
+          tp: q.tp,
+          type: q.type,
+          difficulty: q.difficulty,
+          status: evalRes.status,
+          isCorrect: evalRes.isCorrect,
+          userAns: userAns === undefined ? null : userAns
+        };
+      });
+
+      Object.values(tpStats).forEach(tp => {
+        tp.percentage = tp.total > 0 ? Math.round((tp.correct / tp.total) * 100) : 0;
+        tp.mastered = tp.percentage >= ASSESSMENT_CONFIG.kktp;
+      });
+
+      const finalScore = Math.round((correctCount / totalQ) * 100);
+      const isPassed = finalScore >= ASSESSMENT_CONFIG.kktp;
+
+      const record = {
+        studentKey: state.student.studentKey,
+        studentName: state.student.name,
+        studentClass: state.student.kelas,
+        studentAbsen: state.student.absen,
+        durationSeconds: elapsedSec,
+        durationFormatted: formatElapsedHuman(elapsedSec),
+        correctCount,
+        wrongCount,
+        blankCount,
+        totalQuestions: totalQ,
+        finalScore,
+        isPassed,
+        autoSubmitted,
+        submittedAt: new Date().toISOString(),
+        tpSummary: tpStats,
+        answersDetail
+      };
+
+      state.lastResultRecord = record;
+      renderResultReport(record);
+      switchView('view-result');
+
+      // Sync to Firestore & LocalStorage
+      const syncRes = await saveSubmissionToBackend(record);
+      updateResultSyncStatus(syncRes.synced);
+      state.isSubmitting = false;
+    }
+
+    function updateResultSyncStatus(synced) {
+      const pill = document.getElementById('res-sync-pill');
+      const text = document.getElementById('res-sync-text');
+      const retryBtn = document.getElementById('btn-retry-sync');
+
+      if (synced) {
+        pill.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200";
+        text.textContent = "Terkirim ke Rekap Guru (Cloud & Lokal)";
+        retryBtn.classList.add('hidden');
+      } else {
+        pill.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200";
+        text.textContent = "Tersimpan di Perangkat (Offline Backup)";
+        retryBtn.classList.remove('hidden');
+      }
+    }
+
+    function renderResultReport(record) {
+      document.getElementById('res-student-name').textContent = record.studentName;
+      document.getElementById('res-student-meta').textContent = `Kelas ${record.studentClass} • No. Absen ${record.studentAbsen} • Waktu Pengerjaan: ${record.durationFormatted}`;
+
+      const statusBadge = document.getElementById('res-status-badge');
+      const statusText = document.getElementById('res-status-text');
+      const scoreCircle = document.getElementById('res-score-circle');
+      const finalScoreEl = document.getElementById('res-final-score');
+
+      finalScoreEl.textContent = record.finalScore;
+      document.getElementById('res-kktp-compare').textContent = `KKTP: ${ASSESSMENT_CONFIG.kktp}`;
+
+      if (record.isPassed) {
+        statusBadge.className = "inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800";
+        statusText.textContent = "TUNTAS (MENCAPAI KKTP)";
+        scoreCircle.className = "w-32 h-32 sm:w-36 sm:h-36 rounded-full border-8 border-emerald-500 bg-emerald-50/40 flex flex-col items-center justify-center shadow-inner";
+        finalScoreEl.className = "font-display text-4xl sm:text-5xl font-extrabold text-emerald-600";
+      } else {
+        statusBadge.className = "inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-800";
+        statusText.textContent = "BELUM TUNTAS (PERLU REMEDIAL)";
+        scoreCircle.className = "w-32 h-32 sm:w-36 sm:h-36 rounded-full border-8 border-rose-500 bg-rose-50/40 flex flex-col items-center justify-center shadow-inner";
+        finalScoreEl.className = "font-display text-4xl sm:text-5xl font-extrabold text-rose-600";
+      }
+
+      document.getElementById('res-correct-count').textContent = record.correctCount;
+      document.getElementById('res-wrong-count').textContent = record.wrongCount;
+      document.getElementById('res-blank-count').textContent = record.blankCount;
+      document.getElementById('res-percentage').textContent = `${record.finalScore}%`;
+
+      // Competency Breakdown (TP1 - TP5)
+      const tpContainer = document.getElementById('res-tp-breakdown');
+      const tpList = Object.values(record.tpSummary);
+      tpContainer.innerHTML = tpList.map(tp => {
+        const barColor = tp.mastered ? 'bg-emerald-500' : (tp.percentage >= 50 ? 'bg-amber-500' : 'bg-rose-500');
+        const badgeClass = tp.mastered
+          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+          : 'bg-rose-50 text-rose-700 border-rose-200';
+        const badgeLabel = tp.mastered ? 'Sudah Dikuasai' : 'Perlu Diperkuat';
+
+        return `
+          <div class="space-y-1.5">
+            <div class="flex items-start justify-between gap-2">
+              <div class="text-xs sm:text-sm text-slate-700">
+                <span class="font-bold text-slate-900">${tp.id}:</span> ${tp.text}
+              </div>
+              <span class="px-2 py-0.5 rounded-md border text-[11px] font-bold shrink-0 ${badgeClass}">
+                ${badgeLabel} (${tp.percentage}%)
+              </span>
+            </div>
+            <div class="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
+              <div class="h-full rounded-full ${barColor} transition-all duration-500" style="width: ${tp.percentage}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Pedagogical Recommendations (Remedial & Pengayaan)
+      const weakTps = tpList.filter(t => !t.mastered);
+      const followupBox = document.getElementById('res-followup-content');
+
+      if (record.isPassed && weakTps.length === 0) {
+        followupBox.innerHTML = `
+          <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-2">
+            <p class="font-bold flex items-center gap-2"><i class="fa-solid fa-star text-emerald-600"></i> Program Pengayaan (Enrichment)</p>
+            <p class="text-xs leading-relaxed">Selamat! Anda telah menguasai seluruh Tujuan Pembelajaran pada <strong>Bab 3: Journey to The Fantasy Worlds</strong> dengan sangat baik.</p>
+          </div>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-700 list-disc pl-5">
+            <li><strong>Tantangan Kreatif Multiverse:</strong> Tulislah cerita fantasi orisinal (150–200 kata) bertema <em>"The Multiverse of Indonesian Legends"</em> dengan memadukan unsur <em>Orientation, Complication, Resolution,</em> dan <em>Coda</em>.</li>
+            <li><strong>Eksplorasi Bahasa:</strong> Sertakan minimal 3 kalimat menggunakan <em>was/were</em> dan 2 dialog <em>indirect speech</em> untuk pertanyaan.</li>
+            <li><strong>Tutor Sebaya:</strong> Bantu teman sekelas yang masih memerlukan penguatan pada bagian struktur naratif atau <em>indirect speech</em>.</li>
+          </ul>
+        `;
+      } else {
+        const weakListHtml = weakTps.length > 0
+          ? `<ul class="list-disc pl-5 space-y-1 text-xs font-medium text-rose-800">${weakTps.map(w => `<li><strong>${w.id}:</strong> ${w.text} (${w.percentage}%)</li>`).join('')}</ul>`
+          : `<p class="text-xs text-slate-600">Perkuat kembali ketelitian pada soal pilihan ganda kompleks dan benar/salah.</p>`;
+
+        followupBox.innerHTML = `
+          <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-950 space-y-2">
+            <p class="font-bold flex items-center gap-2"><i class="fa-solid fa-book-medical text-amber-600"></i> Program Remedial & Penguatan Terarah</p>
+            <p class="text-xs leading-relaxed">Fokuskan pembelajaran mandiri Anda pada kompetensi berikut sebelum mengikuti asesmen perbaikan:</p>
+            ${weakListHtml}
+          </div>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-700 list-disc pl-5">
+            <li>Pelajari kembali pembahasan soal yang masih keliru di bawah ini, terutama perbedaan penggunaan <strong>was</strong> (subjek tunggal) dan <strong>were</strong> (subjek jamak/you).</li>
+            <li>Latih mengubah 5 kalimat tanya langsung menjadi <strong>Indirect Speech</strong> dengan memperhatikan perubahan susunan subjek-predikat dan mundurnya tensis.</li>
+            <li>Konsultasikan hasil analisis ini kepada guru mata pelajaran untuk jadwal pendampingan remedial.</li>
+          </ul>
+        `;
+      }
+
+      // Render Question Review List
+      renderReviewItems(record, 'all');
+    }
+
+    function renderReviewItems(record, filter) {
+      const container = document.getElementById('res-questions-review');
+      const detailMap = new Map();
+      (record.answersDetail || []).forEach(d => detailMap.set(d.questionId, d));
+
+      const filteredQuestions = ASSESSMENT_CONFIG.questions.filter(q => {
+        const d = detailMap.get(q.id);
+        if (!d) return true;
+        if (filter === 'wrong') return !d.isCorrect;
+        if (filter === 'correct') return d.isCorrect;
+        return true;
+      });
+
+      if (filteredQuestions.length === 0) {
+        container.innerHTML = `<p class="text-center py-8 text-sm text-slate-400">Tidak ada soal pada kategori filter ini.</p>`;
+        return;
+      }
+
+      container.innerHTML = filteredQuestions.map((q, index) => {
+        const d = detailMap.get(q.id) || { status: 'blank', isCorrect: false, userAns: null };
+        const qNum = ASSESSMENT_CONFIG.questions.findIndex(item => item.id === q.id) + 1;
+
+        const statusBadge = d.isCorrect
+          ? `<span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-bold"><i class="fa-solid fa-check mr-1"></i>Benar</span>`
+          : `<span class="px-2.5 py-1 rounded-lg bg-rose-100 text-rose-800 text-xs font-bold"><i class="fa-solid fa-xmark mr-1"></i>${d.status === 'blank' ? 'Kosong' : 'Kurang Tepat'}</span>`;
+
+        return `
+          <div class="rounded-2xl border ${d.isCorrect ? 'border-slate-200 bg-white' : 'border-rose-200 bg-rose-50/20'} p-5 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="font-display font-bold text-sm text-slate-900">Soal #${qNum}</span>
+                <span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-xs font-semibold">${q.tp}</span>
+                <span class="text-xs text-slate-400">• ${q.difficulty}</span>
+              </div>
+              ${statusBadge}
+            </div>
+
+            ${q.stimulus ? `<div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 leading-relaxed">${q.stimulus}</div>` : ''}
+
+            <p class="text-sm font-semibold text-slate-900">${q.prompt}</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div class="p-3 rounded-xl ${d.isCorrect ? 'bg-emerald-50 border border-emerald-200' : 'bg-rose-50 border border-rose-200'}">
+                <p class="font-bold text-slate-700 mb-1">Jawaban Anda:</p>
+                <div class="text-slate-800">${formatAnswerDisplay(q, d.userAns)}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-200">
+                <p class="font-bold text-indigo-900 mb-1">Kunci Jawaban Benar:</p>
+                <div class="text-indigo-950 font-medium">${formatAnswerDisplay(q, q.answer)}</div>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
+              <span class="font-bold text-indigo-700"><i class="fa-solid fa-lightbulb mr-1"></i>Pembahasan:</span>
+              <span>${q.pembahasan}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =========================================================================
+       7. TEACHER DASHBOARD, CLASS ANALYTICS & EXCEL/CSV EXPORT
+       ========================================================================= */
+    async function loadAndRenderTeacherDashboard() {
+      document.getElementById('teacher-meta-subtitle').textContent =
+        `${ASSESSMENT_CONFIG.mataPelajaran} • ${ASSESSMENT_CONFIG.jenjang} Kelas ${ASSESSMENT_CONFIG.kelasFase} • ${ASSESSMENT_CONFIG.bab}`;
+      document.getElementById('kpi-kktp-label').textContent = `KKTP ≥ ${ASSESSMENT_CONFIG.kktp}`;
+
+      const records = await fetchAllSubmissions();
+      state.teacherRecordsCache = records;
+      renderTeacherKPIsAndTable(records);
+    }
+
+    function renderTeacherKPIsAndTable(records) {
+      const total = records.length;
+      document.getElementById('kpi-total-students').textContent = total;
+
+      if (total === 0) {
+        document.getElementById('kpi-avg-score').textContent = "0.0";
+        document.getElementById('kpi-mastery-rate').textContent = "0%";
+        document.getElementById('kpi-max-score').textContent = "-";
+        document.getElementById('kpi-max-student').textContent = "Belum ada data";
+        document.getElementById('kpi-min-score').textContent = "-";
+        document.getElementById('kpi-min-student').textContent = "Belum ada data";
+        document.getElementById('teacher-tp-chart').innerHTML = `<p class="text-sm text-slate-400 italic">Belum ada data pengerjaan siswa yang masuk.</p>`;
+        document.getElementById('teacher-recap-tbody').innerHTML = `<tr><td colspan="8" class="py-10 text-center text-slate-400 text-sm">Belum ada peserta didik yang mengumpulkan asesmen.</td></tr>`;
+        return;
+      }
+
+      const sumScore = records.reduce((acc, r) => acc + Number(r.finalScore || 0), 0);
+      const avgScore = (sumScore / total).toFixed(1);
+      const passedCount = records.filter(r => r.isPassed).length;
+      const masteryRate = Math.round((passedCount / total) * 100);
+
+      const sortedByScore = [...records].sort((a, b) => b.finalScore - a.finalScore);
+      const highest = sortedByScore[0];
+      const lowest = sortedByScore[sortedByScore.length - 1];
+
+      document.getElementById('kpi-avg-score').textContent = avgScore;
+      document.getElementById('kpi-mastery-rate').textContent = `${masteryRate}% (${passedCount}/${total})`;
+      document.getElementById('kpi-max-score').textContent = highest.finalScore;
+      document.getElementById('kpi-max-student').textContent = `${highest.studentName} (${highest.studentClass})`;
+      document.getElementById('kpi-min-score').textContent = lowest.finalScore;
+      document.getElementById('kpi-min-student').textContent = `${lowest.studentName} (${lowest.studentClass})`;
+
+      // Classical TP Mastery Aggregation
+      const tpAgg = {};
+      ASSESSMENT_CONFIG.tujuanPembelajaran.forEach(tp => {
+        tpAgg[tp.id] = { id: tp.id, text: tp.text, sumPct: 0, count: 0 };
+      });
+
+      records.forEach(r => {
+        if (r.tpSummary) {
+          Object.values(r.tpSummary).forEach(tpItem => {
+            if (tpAgg[tpItem.id]) {
+              tpAgg[tpItem.id].sumPct += Number(tpItem.percentage || 0);
+              tpAgg[tpItem.id].count += 1;
+            }
+          });
+        }
+      });
+
+      document.getElementById('teacher-tp-chart').innerHTML = Object.values(tpAgg).map(tp => {
+        const avgPct = tp.count > 0 ? Math.round(tp.sumPct / tp.count) : 0;
+        const needsWork = avgPct < ASSESSMENT_CONFIG.kktp;
+        const barColor = needsWork ? 'bg-rose-500' : 'bg-emerald-500';
+        const tag = needsWork
+          ? `<span class="text-[11px] font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-md">Perlu Penguatan (${avgPct}%)</span>`
+          : `<span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">Tuntas Klasikal (${avgPct}%)</span>`;
+
+        return `
+          <div class="space-y-1.5">
+            <div class="flex items-start justify-between gap-2 text-xs">
+              <span class="text-slate-700"><strong class="text-slate-900">${tp.id}:</strong> ${tp.text}</span>
+              <span class="shrink-0">${tag}</span>
+            </div>
+            <div class="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
+              <div class="h-full rounded-full ${barColor}" style="width: ${avgPct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderRecapTableRows(records);
+    }
+
+    function renderRecapTableRows(records) {
+      const tbody = document.getElementById('teacher-recap-tbody');
+      if (records.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-400 text-sm">Tidak ada data yang cocok dengan pencarian.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = records.map((r, idx) => {
+        const weakTps = r.tpSummary
+          ? Object.values(r.tpSummary).filter(t => !t.mastered).map(t => t.id)
+          : [];
+        const weakText = weakTps.length > 0
+          ? `<span class="text-xs font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">${weakTps.join(', ')}</span>`
+          : `<span class="text-xs font-medium text-emerald-700">Semua TP Tuntas</span>`;
+
+        const statusPill = r.isPassed
+          ? `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Tuntas</span>`
+          : `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800">Remedial</span>`;
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition">
+            <td class="py-3.5 px-4 text-xs text-slate-500 font-medium">${idx + 1}</td>
+            <td class="py-3.5 px-4 font-semibold text-slate-900">${r.studentName}</td>
+            <td class="py-3.5 px-4 text-xs text-slate-600">${r.studentClass} / Absen ${r.studentAbsen}</td>
+            <td class="py-3.5 px-4 text-xs text-slate-600">${r.durationFormatted || '-'}</td>
+            <td class="py-3.5 px-4 text-center text-xs font-mono">
+              <span class="text-emerald-600 font-bold">${r.correctCount}</span> /
+              <span class="text-rose-600 font-bold">${r.wrongCount}</span> /
+              <span class="text-slate-500">${r.blankCount}</span>
+            </td>
+            <td class="py-3.5 px-4 text-center font-display font-extrabold text-base ${r.isPassed ? 'text-emerald-600' : 'text-rose-600'}">
+              ${r.finalScore}
+            </td>
+            <td class="py-3.5 px-4">${statusPill}</td>
+            <td class="py-3.5 px-4">${weakText}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Export Rekap to Excel-compatible UTF-8 BOM CSV
+    function downloadRecapCSV() {
+      const records = state.teacherRecordsCache;
+      if (!records || records.length === 0) {
+        showToast("Belum ada data siswa untuk diunduh.");
+        return;
+      }
+
+      const tpIds = ASSESSMENT_CONFIG.tujuanPembelajaran.map(t => t.id);
+      const headers = [
+        "No",
+        "Nama Peserta Didik",
+        "Kelas",
+        "No Absen",
+        "Mata Pelajaran",
+        "Bab / Materi",
+        "Waktu Pengerjaan",
+        "Benar",
+        "Salah",
+        "Kosong",
+        "Nilai Akhir",
+        "KKTP",
+        "Status Ketuntasan",
+        ...tpIds.map(id => `Capaian ${id} (%)`),
+        "Kompetensi Perlu Penguatan",
+        "Waktu Pengumpulan"
+      ];
+
+      const escapeCsv = (val) => {
+        const str = String(val ?? '');
+        if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+          return `"${str.replace(/"/g, '""')}"`;
+        }
+        return str;
+      };
+
+      const rows = records.map((r, idx) => {
+        const tpScores = tpIds.map(id => (r.tpSummary && r.tpSummary[id] ? r.tpSummary[id].percentage : 0));
+        const weakTps = r.tpSummary
+          ? Object.values(r.tpSummary).filter(t => !t.mastered).map(t => t.id).join('; ')
+          : '';
+
+        return [
+          idx + 1,
+          r.studentName,
+          r.studentClass,
+          r.studentAbsen,
+          ASSESSMENT_CONFIG.mataPelajaran,
+          ASSESSMENT_CONFIG.bab,
+          r.durationFormatted,
+          r.correctCount,
+          r.wrongCount,
+          r.blankCount,
+          r.finalScore,
+          ASSESSMENT_CONFIG.kktp,
+          r.isPassed ? "TUNTAS" : "BELUM TUNTAS",
+          ...tpScores,
+          weakTps || "Semua TP Tuntas",
+          r.submittedAt
+        ].map(escapeCsv).join(',');
+      });
+
+      const csvContent = "\uFEFF" + [headers.map(escapeCsv).join(','), ...rows].join('\r\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const dateStamp = new Date().toISOString().slice(0, 10);
+      link.href = url;
+      link.download = `Rekap_Asesmen_${ASSESSMENT_CONFIG.mataPelajaran.replace(/\s+/g, '_')}_${dateStamp}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast("File Rekap Excel (.CSV) berhasil diunduh!");
+    }
+
+    /* =========================================================================
+       8. EVENT LISTENERS & INITIALIZATION
+       ========================================================================= */
+    document.addEventListener('DOMContentLoaded', async () => {
+      renderLandingInfo();
+      await initCloudBackend();
+
+      // Toggle reset token input
+      document.getElementById('toggle-reset-token').addEventListener('click', () => {
+        document.getElementById('reset-token-container').classList.toggle('hidden');
+      });
+
+      // View existing result button if locked
+      document.getElementById('btn-view-existing-result').addEventListener('click', () => {
+        if (state.lastResultRecord) {
+          renderResultReport(state.lastResultRecord);
+          switchView('view-result');
+        }
+      });
+
+      // Start Exam Form Submission
+      document.getElementById('student-start-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('input-student-name').value.trim();
+        const kelas = document.getElementById('input-student-class').value.trim().toUpperCase();
+        const absen = document.getElementById('input-student-absen').value.trim().padStart(2, '0');
+        const tokenInput = document.getElementById('input-reset-token').value.trim().toUpperCase();
+        const errorBox = document.getElementById('form-error-msg');
+
+        if (!name || !kelas || !absen) {
+          errorBox.textContent = "Harap lengkapi Nama Lengkap, Kelas, dan Nomor Absen.";
+          errorBox.classList.remove('hidden');
+          return;
+        }
+        errorBox.classList.add('hidden');
+
+        const studentKey = normalizeStudentKey(name, kelas, absen);
+        const hasValidResetToken = tokenInput && tokenInput === ASSESSMENT_CONFIG.resetToken.toUpperCase();
+
+        // Retake Prevention Check (unless valid teacher reset token is provided)
+        if (!hasValidResetToken) {
+          const existing = await checkExistingStudentSubmission(studentKey);
+          if (existing) {
+            state.lastResultRecord = existing;
+            const warnBox = document.getElementById('retake-warning-box');
+            const warnMsg = document.getElementById('retake-warning-msg');
+            warnBox.classList.remove('hidden');
+            warnMsg.textContent = `Peserta didik ${existing.studentName} (${existing.studentClass} / Absen ${existing.studentAbsen}) sudah mengerjakan asesmen ini (Nilai: ${existing.finalScore}). Pengerjaan ulang tidak diizinkan tanpa Token Reset dari Guru.`;
+            showToast("Pengerjaan ulang dibatasi sistem.");
+            return;
+          }
+        } else {
+          showToast("Token Reset Guru diterima. Membuka lembar asesmen baru...");
+        }
+
+        // Initialize Student Session
+        state.student = { name, kelas, absen, studentKey };
+        state.examQuestions = prepareExamQuestions();
+        state.currentIndex = 0;
+        state.userAnswers = {};
+        state.flagged = {};
+        state.startTimeMs = Date.now();
+
+        // Update Exam Header
+        const initials = name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        document.getElementById('exam-student-initials').textContent = initials || 'S';
+        document.getElementById('exam-student-name').textContent = name;
+        document.getElementById('exam-student-meta').textContent = `Kelas ${kelas} • No. Absen ${absen}`;
+
+        renderCurrentQuestion();
+        renderQuestionNavigators();
+        switchView('view-exam');
+        startCountdownTimer();
+      });
+
+      // Exam Navigation Buttons
+      document.getElementById('btn-prev-q').addEventListener('click', () => {
+        if (state.currentIndex > 0) {
+          state.currentIndex--;
+          renderCurrentQuestion();
+          renderQuestionNavigators();
+        }
+      });
+
+      document.getElementById('btn-next-q').addEventListener('click', () => {
+        if (state.currentIndex < state.examQuestions.length - 1) {
+          state.currentIndex++;
+          renderCurrentQuestion();
+          renderQuestionNavigators();
+        } else {
+          openSubmitConfirmationModal();
+        }
+      });
+
+      document.getElementById('btn-flag-q').addEventListener('click', () => {
+        const q = state.examQuestions[state.currentIndex];
+        if (!q) return;
+        state.flagged[q.id] = !state.flagged[q.id];
+        renderCurrentQuestion();
+        renderQuestionNavigators();
+      });
+
+      // Mobile Navigator Drawer
+      document.getElementById('btn-toggle-mobile-nav').addEventListener('click', () => {
+        document.getElementById('mobile-nav-drawer').classList.toggle('hidden');
+      });
+      document.getElementById('btn-close-mobile-nav').addEventListener('click', () => {
+        document.getElementById('mobile-nav-drawer').classList.add('hidden');
+      });
+
+      // Submit Confirmation Modal
+      function openSubmitConfirmationModal() {
+        let answered = 0;
+        let flagged = 0;
+        state.examQuestions.forEach(q => {
+          if (isQuestionAnswered(q.id)) answered++;
+          if (state.flagged[q.id]) flagged++;
+        });
+        const unanswered = state.examQuestions.length - answered;
+
+        document.getElementById('modal-answered-count').textContent = `${answered} soal`;
+        document.getElementById('modal-unanswered-count').textContent = `${unanswered} soal`;
+        document.getElementById('modal-flagged-count').textContent = `${flagged} soal`;
+        document.getElementById('modal-submit-confirm').classList.remove('hidden');
+      }
+
+      document.getElementById('btn-open-submit-modal').addEventListener('click', openSubmitConfirmationModal);
+      document.getElementById('btn-open-submit-modal-mobile').addEventListener('click', openSubmitConfirmationModal);
+      document.getElementById('btn-cancel-submit').addEventListener('click', () => {
+        document.getElementById('modal-submit-confirm').classList.add('hidden');
+      });
+      document.getElementById('btn-confirm-submit').addEventListener('click', () => {
+        finalizeAndSubmitExam(false);
+      });
+
+      // Retry Cloud Sync Button on Result View
+      document.getElementById('btn-retry-sync').addEventListener('click', async () => {
+        if (!state.lastResultRecord) return;
+        const res = await saveSubmissionToBackend(state.lastResultRecord);
+        updateResultSyncStatus(res.synced);
+        showToast(res.synced ? "Berhasil terkirim ke rekap guru!" : "Masih offline, data aman di perangkat.");
+      });
+
+      // Review Filter Buttons
+      document.querySelectorAll('.review-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.review-filter-btn').forEach(b => {
+            b.className = "review-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900";
+          });
+          btn.className = "review-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-indigo-700 shadow-xs";
+          if (state.lastResultRecord) {
+            renderReviewItems(state.lastResultRecord, btn.dataset.filter);
+          }
+        });
+      });
+
+      // Teacher Dashboard PIN Modal
+      document.getElementById('btn-open-teacher-modal').addEventListener('click', () => {
+        document.getElementById('input-teacher-pin').value = '';
+        document.getElementById('pin-error-msg').classList.add('hidden');
+        document.getElementById('modal-teacher-pin').classList.remove('hidden');
+        setTimeout(() => document.getElementById('input-teacher-pin').focus(), 100);
+      });
+
+      document.getElementById('btn-close-pin-modal').addEventListener('click', () => {
+        document.getElementById('modal-teacher-pin').classList.add('hidden');
+      });
+
+      document.getElementById('teacher-pin-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const entered = document.getElementById('input-teacher-pin').value.trim();
+        if (entered === ASSESSMENT_CONFIG.teacherPin) {
+          document.getElementById('modal-teacher-pin').classList.add('hidden');
+          await loadAndRenderTeacherDashboard();
+          switchView('view-teacher');
+        } else {
+          document.getElementById('pin-error-msg').classList.remove('hidden');
+        }
+      });
+
+      // Teacher Dashboard Actions
+      document.getElementById('btn-exit-teacher').addEventListener('click', () => {
+        if (state.lastResultRecord) {
+          switchView('view-result');
+        } else {
+          switchView('view-landing');
+        }
+      });
+
+      document.getElementById('btn-export-csv').addEventListener('click', downloadRecapCSV);
+
+      document.getElementById('btn-refresh-teacher-data').addEventListener('click', async () => {
+        await loadAndRenderTeacherDashboard();
+        showToast("Data rekapitulasi diperbarui.");
+      });
+
+      document.getElementById('btn-copy-reset-token').addEventListener('click', () => {
+        const temp = document.createElement('textarea');
+        temp.value = ASSESSMENT_CONFIG.resetToken;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        showToast(`Token "${ASSESSMENT_CONFIG.resetToken}" disalin!`);
+      });
+
+      document.getElementById('teacher-search-input').addEventListener('input', (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        const filtered = state.teacherRecordsCache.filter(r =>
+          r.studentName.toLowerCase().includes(q) ||
+          r.studentClass.toLowerCase().includes(q)
+        );
+        renderRecapTableRows(filtered);
+      });
+
+      // Clear Data Modal
+      document.getElementById('btn-clear-all-data').addEventListener('click', () => {
+        document.getElementById('modal-clear-confirm').classList.remove('hidden');
+      });
+      document.getElementById('btn-cancel-clear').addEventListener('click', () => {
+        document.getElementById('modal-clear-confirm').classList.add('hidden');
+      });
+      document.getElementById('btn-confirm-clear').addEventListener('click', async () => {
+        document.getElementById('modal-clear-confirm').classList.add('hidden');
+        // Clear local storage
+        localStorage.removeItem(LOCAL_RECAP_KEY);
+        Object.keys(localStorage).forEach(k => {
+          if (k.startsWith(LOCAL_LOCK_PREFIX)) localStorage.removeItem(k);
+        });
+        state.lastResultRecord = null;
+        document.getElementById('retake-warning-box').classList.add('hidden');
+
+        // Clear cloud docs if available
+        if (isCloudAvailable && db && currentUser) {
+          try {
+            const colRef = collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME);
+            const snap = await getDocs(colRef);
+            const deletions = [];
+            snap.forEach(d => deletions.push(deleteDoc(d.ref)));
+            await Promise.all(deletions);
+          } catch (err) {
+            console.warn("Cloud clear warning:", err);
+          }
+        }
+
+        await loadAndRenderTeacherDashboard();
+        showToast("Seluruh rekap berhasil direset.");
+      });
+    });
+  </script>
+</body>
+</html>
